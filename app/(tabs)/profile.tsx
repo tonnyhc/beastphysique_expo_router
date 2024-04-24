@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const DashboardLayout = () => {
+const profile = () => {
   return (
     <View>
-      <Text style={{fontSize: 50, color:"#fff"}}>Dashboard</Text>
+      <Text>profile</Text>
     </View>
   )
 }
 
-export default DashboardLayout
+export default profile
 
 const styles = StyleSheet.create({})

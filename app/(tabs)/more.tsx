@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const DashboardLayout = () => {
+const more = () => {
   return (
     <View>
-      <Text style={{fontSize: 50, color:"#fff"}}>Dashboard</Text>
+      <Text>more</Text>
     </View>
   )
 }
 
-export default DashboardLayout
+export default more
 
 const styles = StyleSheet.create({})
