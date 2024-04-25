@@ -75,7 +75,7 @@ const generateCategories = (
           title: t("screens.more.account"),
           icon: <UserIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.push("/account/"),
         },
 
         // Notifications
@@ -138,7 +138,7 @@ const generateCategories = (
   return categories;
 };
 
-const BaseMoreScreen: React.FC = () => {
+const MoreLayout: React.FC = () => {
   const { t } = useTranslation();
   const { colors, toggleTheme, theme } = useTheme();
   const { onLogout } = useAuth();
@@ -174,11 +174,12 @@ const BaseMoreScreen: React.FC = () => {
         }}
       >
         {categories.map((cat, index) => (
-          <View style={styles.frame} key={index}>
+          <View style={styles.frame} key={cat.categoryName + index}>
             <Text style={styles.title}>{cat.categoryName}</Text>
             <View style={styles.properties}>
               {cat.properties.map((prop, index) => (
                 <SettingsNavigationCard
+                key={prop.title + index}
                   title={prop.title}
                   icon={prop.icon}
                   action={prop.action}
@@ -202,4 +203,4 @@ const BaseMoreScreen: React.FC = () => {
   );
 };
 
-export default BaseMoreScreen;
+export default MoreLayout;

@@ -76,6 +76,7 @@ const Onboarding: React.FC = () => {
             />
             </Link>
           <Link href="/login" asChild>
+            {/* <Text>{t("screens.onboarding.signInBtn")}</Text> */}
             <Button
               type="outlined"
               onPress={() => {}}
