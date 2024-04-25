@@ -1,0 +1,124 @@
+{
+    "language": "English",
+    "common": {
+        "username": "Username",
+        "name": "Name",
+        "bio": "Bio",
+        "birthday": "Birthday",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "rePass": "Re-type password",
+        "forgotPass": "Forgot password?",
+        "enterValidEmail": "Please enter a valid email!",
+        "newPassword": "New password",
+        "continue": "Continue",
+        "done": "Done",
+        "weakPassword": "Weak password",
+        "passwordsNotMatch": "Passwords don't match!",
+        "passwordHelperText": "Your password must be at least 9 characters and should include a combination of numbers, letters and special characters (!$@%)."
+
+    },
+    "languages": {
+        "en": "English",
+        "bg": "Bulgarian"
+    },
+    "screens": {
+        "onboarding": {
+            "welcomeMessage": "Track your workouts like a true pro!",
+            "getStartedBtn": "Get started",
+            "signInBtn": "Sign in with an existing account"
+        },
+        "register": {
+            "headerText": "Ready to take your fitness to the next level?",
+            "subHeaderText": "Create a BeastPhysique account to get started."
+        },
+        "login": {
+            "headerText": "Welcome back",
+            "subHeaderText": "Log in to improve yourself"
+        },
+        "forgotPass": {
+            "headerTitle": "Forgot password",
+            "helperText": "Please enter the email associated with your account",
+            "submitBtn": "Continue",
+            "verification": "Verification",
+            "helperTextVerification": "Enter the verification code we sent to email: ",
+            "didNotGetCode": "Did not get code?",
+            "resendCode": "Resend code",
+            "youCanSendAnotherCode": "You can send another code in"
+        },
+        "resetPass": {
+            "headerTitle": "Reset password",
+            "helperText": "At least 8 characters, with uppercase letter, lowercase letter, number and a special symbol"
+        },
+        "successPasswordReset": {
+            "success": "Success",
+            "helperText": "Your password have been reset successfully!"
+        },
+        "more": {
+            "headerTitle": "More",
+            "exercises": "Exercises",
+            "workouts": "Workouts",
+            "weight": "Weight",
+            "goal": "Goal",
+            "account": "Account",
+            "notifications": "Notifications",
+            "language": "Language",
+            "security": "Security",
+            "darkMode": "Dark mode",
+            "helpCenter": "Help center",
+            "reportBug": "Report a bug",
+            "logOut": "Log out",
+            "health_fitness": "Health & Fitness",
+            "settings_preferences": "Settings & Preferences",
+            "support": "Support"
+        },
+        "weight": {
+            "lastWeighIn": "Last weigh in",
+            "logs": "Logs",
+            "editWeight": "Edit weight",
+            "weighIn": "Weigh in"
+        },
+        "goal": {
+            "maintain": "Maintain",
+            "maintainHelperText": "Maintain current physique",
+            "bulk": "Bulk",
+            "bulkHelperText": "Build muscle and strength",
+            "cut": "Cut",
+            "cutHelperText": "Loose fat and get lean"
+        },
+        "account": {
+            "edit_profile_picture": "Edit profile picture",
+            "profile_picture_visibility": "Your profile picture will be visible to everyone.",
+            "choose_from_library": "Choose from library",
+            "take_photo": "Take photo",
+            "remove_photo": "Remove current photo"
+
+        },
+        "change_password": {
+            "current_password": "Current password",
+            "new_password": "New password",
+            "re_type_new_password": "Re-type new password",
+            "change_password": "Change password"
+        },
+        "change_language": {
+            "current_lang": "Selected language",
+            "available_languages": "Available languages",
+            "cant_find_language": "Can't find your language?",
+            "cant_find_language_helper": "We are always working to expand the list of languages supported by BeasthPhysique app. If there is a language you would like us to support, please let us know via Contact Us in the Help Center."
+        },
+        "profile": {
+            "edit_profile": "Edit profile"
+        }
+    },
+    "components": {
+        "registerForm": {
+            "submitBtn": "Create Account",
+            "navigateToLogin": "Sign in with an existing account"
+        },
+        "loginForm": {
+            "submitBtn": "Login",
+            "navigateToRegister": "Dont have an account?"
+        }
+    }
+}

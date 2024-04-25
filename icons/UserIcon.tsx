@@ -10,6 +10,7 @@ const UserIcon: React.FC<IconProps> = ({ color, size, fill, scale }) => {
       width={size}
       height={size}
       fill={fill ? fill : "none"}
+      viewBox="0 0 24 24"
     >
       <Path
         stroke={color}

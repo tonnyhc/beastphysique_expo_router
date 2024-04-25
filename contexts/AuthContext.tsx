@@ -5,10 +5,12 @@ import * as SecureStore from "expo-secure-store";
 import {
   AuthData,
   LoginBody,
-  LoginReturnBody,
+  LoginResponse,
   RegisterBody,
 } from "@/types/authTypes";
 import useApi from "@/hooks/service/useApi";
+import { useSegments } from "expo-router";
+import { useRouter } from "expo-router";
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -33,6 +35,19 @@ interface AuthProps {
 
 export const AuthContext = createContext<AuthProps>({});
 
+function useProtectedRoute(token: string | null) {
+  const segments = useSegments();
+  const router = useRouter();
+  useEffect(() => {
+    const inAuthGroup = segments[0] === "(auth)";
+    if (!token && !inAuthGroup) {
+      router.replace("/(auth)/onboarding");
+    } else if (token && inAuthGroup) {
+      router.replace("/");
+    }
+  }, [token, segments]);
+}
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authData, setAuthData] = useState<AuthData>({
     token: null,
@@ -43,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
   const { post, get, put } = useApi(authData.token || "");
   const [verifyToken, setVerifyToken] = useState<boolean>(false);
-
+  useProtectedRoute(authData.token);
   useEffect(() => {
     const loadAuthData = async (): Promise<void> => {
       const dataFromStorage = await SecureStore.getItemAsync("authData");
@@ -81,7 +96,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  async function login(body: LoginBody): Promise<LoginReturnBody> {
+  async function login(body: LoginBody): Promise<LoginResponse> {
     const loginURL = "authentication/login/";
 
     try {
@@ -98,7 +113,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw error;
     }
   }
-  async function register(body: RegisterBody): Promise<LoginReturnBody> {
+  async function register(body: RegisterBody): Promise<LoginResponse> {
     const registerURL = "authentication/register/";
     try {
       const data = await post(registerURL, body);

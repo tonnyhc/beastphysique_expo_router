@@ -1,0 +1,125 @@
+{
+    "language": "Български",
+    "common": {
+        "username": "Потребителско име",
+        "name": "Име",
+        "bio": "Био",
+        "birthday": "Рожден ден",
+        "email": "Имейл",
+        "password": "Парола",
+        "confirmPassword": "Потвърди паролата",
+        "rePass": "Потвърди паролата",
+        "forgotPass": "Забравена парола?",
+        "enterValidEmail": "Невалиден имейл формат",
+        "newPassword": "Нова парола",
+        "continue": "Напред",
+        "done": "Готово",
+        "weakPassword": "Слаба парола",
+        "passwordsNotMatch": "Паролите не съвпадат!",
+        "passwordHelperText": "Паролата ви трябва да съдържа поне 9 символа, комбинация от букви, цифри и специални символи (!$@%)"
+        
+    },
+    "languages": {
+        "en": "Английски",
+        "bg": "Български"
+    },
+    "screens": {
+        "onboarding": {
+            "welcomeMessage": "Следете си тренировките като професионалисти!",
+            "getStartedBtn": "Регистрирай се",
+            "signInBtn": "Вече имам акаунт"
+        },
+        "register": {
+            "headerText": "Готов ли си да бъдеш най-добрата своя версия",
+            "subHeaderText": "Регистрирай се в BeastPhysique и да започваме"
+        },
+        "login": {
+            "headerText": "Добре дошъл",
+            "subHeaderText": "Влез за да подобриш себе си"
+        },
+        "forgotPass": {
+            "headerTitle": "Забравена парола",
+            "helperText": "Въведете email-а с който сте се регистрирали",
+            "submitBtn": "Напред",
+            "verification": "Потвърждение",
+            "helperTextVerification": "Въведете кода, който ви изпратихме на email: ",
+            "didNotGetCode": "Не сте получили код?",
+            "resendCode": "Изпрати отново",
+            "youCanSendAnotherCode": "Може да изпратите нов код след"
+        },
+        "resetPass": {
+            "headerTitle": "Нова парола"
+        },
+        "successPasswordReset": {
+            "success": "Готово",
+            "helperText": "Паролата ви беше възстановена успешно!"
+        },
+        "more": {
+            "headerTitle": "Още",
+            "exercises": "Упражения",
+            "workouts": "Тренировки",
+            "weight": "Тегло",
+            "goal": "Цел",
+            "account": "Акаунт",
+            "notifications": "Известия",
+            "language": "Език",
+            "security": "Сигурност",
+            "darkMode": "Тъмен режим",
+            "helpCenter": "Помощ",
+            "reportBug": "Докладвай бъг",
+            "logOut": "Изход",
+            "health_fitness": "Здраве & Фитнес",
+            "settings_preferences": "Настройки & Предпочитания",
+            "support": "Поддръжка"
+        },
+        "weight": {
+            "lastWeighIn": "Последно въвеждане",
+            "logs": "Логове",
+            "editWeight": "Обнови тегло",
+            "weighIn": "Въвеждане"
+        },
+        "goal": {
+            "maintain": "Подържане на тегло",
+            "maintainHelperText": "Поддържане на текущата физика",
+            "bulk": "Покачване на мускулна маса",
+            "bulkHelperText": "Покачете мускулна маса и станете по-силни",
+            "cut": "Изчистане на подкожни мазнини",
+            "cutHelperText": "Изчистете ненужните подкожни мазнини"
+        },
+        "account": {
+            "edit_profile_picture": "Обнови профилната снимка",
+            "profile_picture_visibility": "Профилната ви снимка може да бъде видяна от всеки.",
+            "choose_from_library": "Избери от галерията",
+            "take_photo": "Направи снимка",
+            "remove_photo": "Премахни текущата снимка"
+        },
+        "change_password": {
+            "current_password": "Текуща парола",
+            "new_password": "Нова парола",
+            "re_type_new_password": "Потвърдете новата парола",
+            "change_password": "Смени паролата"
+        },
+        "change_language": {
+            "current_lang": "Текущ език",
+            "available_languages": "Налични езици",
+            "cant_find_language": "Не откривате своят език?",
+            "cant_find_language_helper": "Постоянно работим върху това да обогатяваме езиците, които BeasthPhysique поддържа. Ако желаете да добавим вашият език или някой друг, моля свържете се с нас чрез 'Контакти' в менюто 'Помощ'"
+        },
+        "profile": {
+            "edit_profile": "Редактирай профила"
+        }
+    
+        
+    },
+    "components": {
+        "registerForm": {
+            "submitBtn": "Регистрирай се",
+            "navigateToLogin": "Влез с друг акаунт"
+        },
+        "loginForm": {
+            "submitBtn": "Влез",
+            "navigateToRegister": "Нямаш акаунт?"
+        }
+    }
+    
+}

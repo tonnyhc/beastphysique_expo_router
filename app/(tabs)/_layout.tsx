@@ -3,13 +3,13 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 
-import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import DumbbellIcon from "@/icons/DumbbellIcon";
 import HomeIcon from "@/icons/HomeIcon";
 import UserIcon from "@/icons/UserIcon";
 import MoreIcon from "@/icons/MoreIcon";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -21,11 +21,23 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { colors } = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: colors.primaryText,
+        tabBarStyle: {
+          backgroundColor: "transparent",
+          borderTopWidth: 0,
+          paddingTop: 18,
+        },
+        tabBarItemStyle: {
+          width: 24,
+          height: 24,
+        },
+        tabBarShowLabel: false,
+
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),

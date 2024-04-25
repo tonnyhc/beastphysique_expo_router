@@ -1,17 +1,16 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import "@/localization/i18n";
+
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { AuthProvider } from "@/contexts/AuthContext";
-
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { StatusBar } from "expo-status-bar";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -56,21 +55,25 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
   return <RootLayoutNav />;
 }
 
+const queryClient = new QueryClient();
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { theme } = useTheme();
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <StatusBar style="dark" />
+      <AuthProvider>
+        <ThemeProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
