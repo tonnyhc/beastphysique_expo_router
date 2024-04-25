@@ -40,7 +40,9 @@ export default function TabLayout() {
 
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        // headerShown: useClientOnlyValue(false, true),
+        headerShown: false
+        
       }}
     >
       <Tabs.Screen
@@ -83,6 +85,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+
         name="more"
         options={{
           title: "More",

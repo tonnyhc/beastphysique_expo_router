@@ -95,7 +95,7 @@ const ResetPassword: React.FC = () => {
               paddingTop: 15,
             }}
           >
-            {error.message}
+            {error}
           </Text>
         </View>
         <Text>{error}</Text>
