@@ -15,8 +15,7 @@ import { useTranslation } from "react-i18next";
 import { LoginBody, LoginResponse } from "@/types/authTypes";
 import AuthStackHeader from "@/components/auth/AuthStackHeader";
 import LoginForm from "@/components/auth/LoginForm";
-
-
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -50,20 +49,17 @@ const Login: React.FC = () => {
 
   const { data, mutate, isPending } = useMutation({
     mutationFn: mutationLogin,
-    // onSuccess: () => {
-    //   !data?.is_verified ? navigation.navigate("AccountVerification") : "";
-    // },
     onError: (error: string) => {
       setLoginErrors(error);
     },
   });
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: "#1C1C1E" }}
-    >
-      <AuthStackHeader />
-      <Screen closeKeyboardOnClick={true}>
+    <Screen closeKeyboardOnClick={true}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={useHeaderHeight()}
+      >
         <View style={styles.section}>
           <View style={{ gap: 10 }}>
             <Text style={styles.welcomeTextTitle}>
@@ -80,8 +76,8 @@ const Login: React.FC = () => {
             isPending={isPending}
           />
         </View>
-      </Screen>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </Screen>
   );
 };
 
