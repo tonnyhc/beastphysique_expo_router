@@ -62,7 +62,7 @@ const generateCategories = (
           title: t("screens.more.goal"),
           icon: <EditIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.push("/(tabs)/(more)/goal"),
         },
       ],
     },

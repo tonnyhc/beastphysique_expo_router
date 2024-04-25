@@ -24,6 +24,17 @@ export default function MoreLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="goal"
+        options={{
+          header: () => (
+            <StackHeader
+              headerLeft={<BackButton onPress={() => router.back()} />}
+              headerTitle="Edit goal"
+            />
+          ),
+        }}
+      />
     </Stack>
   );
 }
