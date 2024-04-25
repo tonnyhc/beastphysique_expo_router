@@ -86,7 +86,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
 
-        name="more"
+        name="(more)"
         options={{
           title: "More",
           tabBarIcon: ({ focused, color, size }) => (

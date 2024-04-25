@@ -1,22 +1,11 @@
 import { ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 import React from "react";
-// import SettingsFrameWrapper, {
-//   SettingsFrameWrapperProps,
-// } from "../../components/more-screen/SettingsFrameWrapper";
-import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import UserIcon from "@/icons/UserIcon";
 import DumbbellIcon from "@/icons/DumbbellIcon";
-import ChevronRight from "./ChevronRight";
-import ScaleIcon from "./ScaleIcon";
 import EditIcon from "@/icons/EditIcon";
-import NotificationIcon from "./NotificationIcon";
-import LanguageIcon from "./LanguageIcon";
-import ShieldIcon from "./ShieldIcon";
-import MoonIcon from "./MoonIcon";
-import FlagIcon from "./FlagIcon";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import Screen from "@/components/common/Screen";
@@ -25,6 +14,13 @@ import LogoutIcon from "@/icons/LogoutIcon";
 import SettingsNavigationCard, {
   SettingsNavigationCardProps,
 } from "@/components/more/SettingsNavigationCard";
+import ChevronRight from "@/icons/ChevronRight";
+import ScaleIcon from "@/icons/ScaleIcon";
+import NotificationIcon from "@/icons/NotificationIcon";
+import LanguageIcon from "@/icons/LanguageIcon";
+import ShieldIcon from "@/icons/ShieldIcon";
+import MoonIcon from "@/icons/MoonIcon";
+import FlagIcon from "@/icons/FlagIcon";
 
 const generateCategories = (
   colors: Colors,
@@ -52,14 +48,14 @@ const generateCategories = (
           title: t("screens.more.workouts"),
           icon: <DumbbellIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.replace("/(tabs)/"),
         },
         // Weight
         {
           title: t("screens.more.weight"),
           icon: <ScaleIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.push('/(tabs)/(more)/weight')
         },
         // Goal
         {
@@ -126,12 +122,14 @@ const generateCategories = (
           title: t("screens.more.helpCenter"),
           icon: <NotificationIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
+          navigate: () => {},
         },
         // Report a bug
         {
           title: t("screens.more.reportBug"),
           icon: <FlagIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
+          navigate: () => {},
         },
       ],
     },
