@@ -55,14 +55,14 @@ const generateCategories = (
           title: t("screens.more.weight"),
           icon: <ScaleIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.push('/(tabs)/(more)/weight')
+          navigate: () => router.push("/(tabs)/more/weight")
         },
         // Goal
         {
           title: t("screens.more.goal"),
           icon: <EditIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.push("/(tabs)/(more)/goal"),
+          navigate: () => router.push("/(tabs)/more/goal"),
         },
       ],
     },
@@ -90,7 +90,7 @@ const generateCategories = (
           title: t("screens.more.language"),
           icon: <LanguageIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.push("/(tabs)/more/language"),
         },
         // Security
         {
@@ -170,7 +170,7 @@ const MoreLayout: React.FC = () => {
         contentContainerStyle={{
           paddingBottom: 30,
           gap: 10,
-          flex: 1,
+          flexGrow: 1,
         }}
       >
         {categories.map((cat, index) => (

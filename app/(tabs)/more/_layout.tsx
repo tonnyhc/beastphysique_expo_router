@@ -40,6 +40,17 @@ export default function MoreLayout() {
             ),
           }}
         />
+                <Stack.Screen
+          name="language"
+          options={{
+            header: () => (
+              <StackHeader
+                headerLeft={<BackButton onPress={() => router.back()} />}
+                headerTitle={t("screens.more.language")}
+              />
+            ),
+          }}
+        />
       </Stack>
     </>
   );

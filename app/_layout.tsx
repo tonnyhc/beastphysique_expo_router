@@ -68,10 +68,10 @@ function RootLayoutNav() {
       <StatusBar style="dark" />
       <AuthProvider>
         <ThemeProvider>
-          <Stack screenOptions={{ headerShown: false }}>
+          <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)">
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="(auth)" />
-            {/* <Stack.Screen name="(account)" />  */}
+            <Stack.Screen name="account" /> 
           </Stack>
         </ThemeProvider>
       </AuthProvider>
