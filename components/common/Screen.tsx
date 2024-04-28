@@ -23,7 +23,7 @@ const Screen: React.FC<ScreenProps> = ({
 }) => {
   const { colors } = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg, ...styles }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg, paddingTop: 12}}>
       {closeKeyboardOnClick ? (
         <TouchableWithoutFeedback
           style={{ flexGrow: 1 }}
@@ -36,6 +36,7 @@ const Screen: React.FC<ScreenProps> = ({
               paddingRight: 16,
               paddingTop: 12,
               flex: 1,
+              ...styles
             }}
           >
             {children}
@@ -48,6 +49,7 @@ const Screen: React.FC<ScreenProps> = ({
             paddingRight: 16,
             paddingTop: 12,
             flex: 1,
+            ...styles 
           }}
         >
           {children}

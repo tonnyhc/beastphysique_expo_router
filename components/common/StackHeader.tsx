@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ViewStyle } from "react-native";
 import React, { ReactNode } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -6,12 +6,14 @@ interface StackHeaderProps {
   headerLeft?: ReactNode;
   headerTitle: string;
   headerRight?: ReactNode;
+  headerStyles?: ViewStyle,
 }
 
 const StackHeader: React.FC<StackHeaderProps> = ({
   headerLeft,
   headerTitle,
   headerRight,
+  headerStyles
 }) => {
   const { colors } = useTheme();
 
@@ -25,6 +27,7 @@ const StackHeader: React.FC<StackHeaderProps> = ({
       alignItems: "center",
       paddingHorizontal: 12,
       minHeight: 50,
+      ...headerStyles
     },
     headerTitle: {
       fontSize: 18,

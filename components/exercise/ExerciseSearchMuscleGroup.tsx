@@ -70,6 +70,7 @@ const ExerciseSearchMuscleGroup: React.FC<ExerciseSearchMuscleGroupProps> = ({
         <View style={styles.exercisesWrapper}>
           {muscleGroupData.exercises.map((exercise) => (
             <ExerciseSearchCard
+              key={exercise.id}
               isSelected={checkIsSelected(exercise.id)}
               exercise={exercise}
               onSelectExercise={onSelectExercise}

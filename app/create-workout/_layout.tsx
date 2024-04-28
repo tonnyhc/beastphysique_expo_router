@@ -15,36 +15,10 @@ const CreateWorkoutLayout = () => {
   const { t } = useTranslation();
   return (
     <CreateWorkoutProvider>
-      <Stack>
+      <Stack initialRouteName="index">
         <Stack.Screen
           options={{
-            header: () => (
-              <StackHeader
-                headerTitle="Create workout"
-                headerRight={
-                  <Button
-                    type="text"
-                    text={t("common.done")}
-                    onPress={() => {
-                      const { submitCreate } = useCreateWorkoutContext();
-                      submitCreate();
-                    }}
-                  />
-                }
-                headerLeft={
-                  <Button
-                    buttonStyles={{ alignSelf: "flex-start" }}
-                    //   TODO: Add a modal to ask the user is he sure he wants to discard his changes
-                    onPress={() => router.back()}
-                    type="text"
-                    text=""
-                    leftIcon={
-                      <CloseIcon size={24} color={colors.primaryText} />
-                    }
-                  />
-                }
-              />
-            ),
+            headerShown: false
           }}
           name="index"
         />
