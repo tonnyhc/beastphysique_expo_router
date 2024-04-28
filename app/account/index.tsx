@@ -33,22 +33,22 @@ const AccountSettings: React.FC = () => {
     {
       key: t("common.name"),
       value: data.full_name,
-      navigate: () => router.push("/(account)/nameSettings"),
+      navigate: () => router.push("/account/nameSettings"),
     },
     {
       key: t("common.username"),
       value: data.user,
-      navigate: () => router.push("/(account)/usernameSettings"),
+      navigate: () => router.push("/account/usernameSettings"),
     },
     {
       key: t("common.bio"),
       value: data.bio,
-      navigate: () => router.push("/(account)/bioSettings"),
+      navigate: () => router.push("/account/bioSettings"),
     },
     {
       key: t("common.birthday"),
       value: data.birthday,
-      navigate: () => router.push("/(account)/birthdaySettings"),
+      navigate: () => router.push("/account/birthdaySettings"),
     },
   ];
 

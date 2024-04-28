@@ -42,7 +42,7 @@ export const lightColors: Colors = {
   helperText: "#8A8A8A",
   physiqueGoalCardHelperText: "#8A8A8A",
   lightGray: "#CFCFCF",
-  cardBackground: "#E7EFF1",
+  cardBackground: "#E6E6E6",
   secondaryText: "#9095A0FF",
   primaryText: "#171A1FFF",
 

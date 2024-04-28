@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import "react-native-gesture-handler";
 import "@/localization/i18n";
 
 import { useFonts } from "expo-font";
@@ -11,6 +12,8 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -60,21 +63,29 @@ export default function RootLayout() {
 
 const queryClient = new QueryClient();
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  const { theme } = useTheme();
+  // const colorScheme = useColorScheme();
+  // const { theme } = useTheme();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="dark" />
-      <AuthProvider>
-        <ThemeProvider>
-          <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)">
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="account" /> 
-          </Stack>
-        </ThemeProvider>
-      </AuthProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar />
+        <AuthProvider>
+          <ThemeProvider>
+            <Stack
+              screenOptions={{ headerShown: false }}
+              initialRouteName="(tabs)"
+            >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="account" />
+              <Stack.Screen name="profile-setup" />
+              <Stack.Screen name="create-workout-plan" />
+              <Stack.Screen name="create-workout" />
+            </Stack>
+          </ThemeProvider>
+        </AuthProvider>
+      </GestureHandlerRootView>
     </QueryClientProvider>
   );
 }

@@ -28,8 +28,8 @@ interface AuthProps {
   onResendVerificationCode?: () => Promise<void>;
   // TODO: Can move this to the profile context later on
   setupProfile: boolean;
-  skipSetupProfile: () => void;
-  verifyProfile: () => void;
+  // skipSetupProfile: () => void;
+  // verifyProfile: () => void;
   changePassword: (password: string, new_password: string) => Promise<void>;
 }
 
@@ -160,20 +160,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  function skipSetupProfile() {
-    setAuthData((oldData) => ({
-      ...oldData,
-      setupProfile: false,
-    }));
-  }
+  // function skipSetupProfile() {
+  //   setAuthData((oldData) => ({
+  //     ...oldData,
+  //     setupProfile: false,
+  //   }));
+  // }
 
-  async function verifyProfile() {
-    setAuthData((oldData) => ({
-      ...oldData,
-      isVerified: true,
-    }));
-    await SecureStore.setItemAsync("authData", JSON.stringify(authData));
-  }
+  // async function verifyProfile() {
+  //   setAuthData((oldData) => ({
+  //     ...oldData,
+  //     isVerified: true,
+  //   }));
+  //   await SecureStore.setItemAsync("authData", JSON.stringify(authData));
+  // }
 
   async function changePassword(password: string, new_password: string) {
     const data = await put("authentication/change-password/", {
@@ -195,8 +195,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     onResendVerificationCode: resendVerificationCode,
     // TODO: Can move this to the profile context later on
     setupProfile: authData.setupProfile,
-    skipSetupProfile,
-    verifyProfile,
+    // skipSetupProfile,
+    // verifyProfile,
     changePassword,
   };
   return (

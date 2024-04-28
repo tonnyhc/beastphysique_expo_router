@@ -40,7 +40,7 @@ export default function MoreLayout() {
             ),
           }}
         />
-                <Stack.Screen
+        <Stack.Screen
           name="language"
           options={{
             header: () => (
@@ -49,6 +49,12 @@ export default function MoreLayout() {
                 headerTitle={t("screens.more.language")}
               />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="security"
+          options={{
+            headerShown: false
           }}
         />
       </Stack>

@@ -6,7 +6,7 @@ import Screen from "@/components/common/Screen";
 import Button from "@/components/common/Button";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/contexts/ThemeContext";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 const Onboarding: React.FC = () => {
   const { t } = useTranslation();
@@ -69,20 +69,16 @@ const Onboarding: React.FC = () => {
         </View>
         {/* buttons */}
         <View style={{ gap: 20 }}>
-          <Link href='/register' asChild>
           <Button
-            onPress={() => {}}
+            onPress={() => router.push("/register")}
             text={t("screens.onboarding.getStartedBtn")}
-            />
-            </Link>
-          <Link href="/login" asChild>
-            {/* <Text>{t("screens.onboarding.signInBtn")}</Text> */}
-            <Button
-              type="outlined"
-              onPress={() => {}}
-              text={t("screens.onboarding.signInBtn")}
-            />
-          </Link>
+          />
+          {/* <Text>{t("screens.onboarding.signInBtn")}</Text> */}
+          <Button
+            type="outlined"
+            onPress={() => router.push("/login")}
+            text={t("screens.onboarding.signInBtn")}
+          />
         </View>
       </View>
     </Screen>

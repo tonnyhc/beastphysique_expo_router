@@ -16,6 +16,7 @@ import AuthStackHeader from "@/components/auth/AuthStackHeader";
 import { RegisterBody } from "@/types/authTypes";
 import RegisterForm from "@/components/auth/RegisterForm";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { router } from "expo-router";
 
 const Register: React.FC = () => {
   //   const keyboardVisible = useKeyboard();
@@ -33,9 +34,9 @@ const Register: React.FC = () => {
   };
   const { mutate, isPending, error } = useMutation({
     mutationFn: mutationRegister,
-    // onSuccess: () => {
-    //   navigation.navigate("AccountVerification");
-    // },
+    onSuccess: () => {
+      router.replace('/profile-setup/')
+    },
   });
   useEffect(() => {
     setErrors((oldErrors) => ({
@@ -64,6 +65,8 @@ const Register: React.FC = () => {
   return (
     <Screen closeKeyboardOnClick={true}>
       <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets
+
         // behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
@@ -76,9 +79,7 @@ const Register: React.FC = () => {
         </View> */}
 
         <View style={styles.section}>
-          {/* <View style={{ flex: 1, marginTop: keyboardVisible ? 0 : 20 }}> */}
           <RegisterForm mutate={mutate} isPending={isPending} errors={errors} />
-          {/* </View> */}
         </View>
       </KeyboardAwareScrollView>
     </Screen>

@@ -29,7 +29,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: colors.primaryText,
         tabBarStyle: {
-          backgroundColor: "transparent",
+          backgroundColor: colors.bg,
           borderTopWidth: 0,
           paddingTop: 18,
         },

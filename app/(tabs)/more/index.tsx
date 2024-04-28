@@ -97,7 +97,7 @@ const generateCategories = (
           title: t("screens.more.security"),
           icon: <ShieldIcon size={24} color={colors.primaryText} />,
           action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
+          navigate: () => router.push("/(tabs)/more/security"),
         },
         // Dark mode
         {
