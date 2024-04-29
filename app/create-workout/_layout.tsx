@@ -7,7 +7,7 @@ import {
 } from "@/contexts/CreateWorkoutContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import CloseIcon from "@/icons/CloseIcon";
-import { Stack, router } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 const CreateWorkoutLayout = () => {
@@ -18,7 +18,7 @@ const CreateWorkoutLayout = () => {
       <Stack initialRouteName="index">
         <Stack.Screen
           options={{
-            headerShown: false
+            headerShown: false,
           }}
           name="index"
         />
@@ -28,6 +28,14 @@ const CreateWorkoutLayout = () => {
               <StackHeader
                 headerTitle="Search exercise"
                 headerLeft={<BackButton onPress={() => router.back()} />}
+                headerRight={
+                  <Button
+                    buttonStyles={{ alignSelf: "flex-end", paddingRight: 0 }}
+                    type="text"
+                    text={t("common.create")}
+                    onPress={() => router.push('/create-exercise/')}
+                  />
+                }
               />
             ),
           }}

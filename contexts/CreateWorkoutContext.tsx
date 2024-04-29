@@ -15,7 +15,7 @@ const emptyWorkoutForCreate: WorkoutCreate = {
 type WorkoutContextProps = {
   workout: WorkoutCreate;
   changeWorkoutName: (name: string) => void;
-  addExercise: (exercises: ExerciseSession[] | ExerciseFromSearch) => void;
+  addExercise: (exercises: Exercise[] | ExerciseFromSearch) => void;
   addSetToExercise: (exerciseIndex: number) => void;
   deleteSetFromExercise: (
     exerciseIndex: number,
@@ -76,6 +76,7 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     }));
   };
   const addExercise = (exercises: Exercise[]) => {
+    console.log('enters')
     const newExercises: ExerciseSession[] = [];
     for (let exercise of exercises) {
       newExercises.push({

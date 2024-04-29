@@ -24,6 +24,7 @@ const CreateWorkoutScreen: React.FC = () => {
         headerTitle="Create workout"
         headerRight={
           <Button
+          buttonStyles={{alignSelf: 'flex-end', paddingRight: 0}}
             type="text"
             text={t("common.done")}
             onPress={() => submitCreate()}

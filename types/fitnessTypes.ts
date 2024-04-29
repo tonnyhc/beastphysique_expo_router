@@ -1,3 +1,4 @@
+import { ImagePickerAsset } from "expo-image-picker";
 import { Profile } from "./profileTypes";
 
 export type ExerciseSet = {
@@ -23,6 +24,17 @@ export type Exercise = {
   created_by: Profile;
   created_at: Date;
   is_published: boolean;
+};
+
+export type CreateExerciseData = {
+  name: string;
+  targeted_muscle_groups: MuscleGroup[];
+  bodyweight: boolean;
+  cover_photo: string | null;
+  information: string;
+  video_tutorial: ImagePickerAsset | null;
+  tips: string;
+  publish: boolean;
 };
 
 export type ExerciseFromSearch = {
@@ -73,3 +85,7 @@ export type MuscleGroupWithExercises = {
     name: string;
   }[];
 };
+export type MuscleGroup = {
+  id: number,
+  name: string
+}

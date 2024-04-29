@@ -16,8 +16,8 @@
         "done": "Done",
         "weakPassword": "Weak password",
         "passwordsNotMatch": "Passwords don't match!",
-        "passwordHelperText": "Your password must be at least 9 characters and should include a combination of numbers, letters and special characters (!$@%)."
-
+        "passwordHelperText": "Your password must be at least 9 characters and should include a combination of numbers, letters and special characters (!$@%).",
+        "create": "Create"
     },
     "languages": {
         "en": "English",

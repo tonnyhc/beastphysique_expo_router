@@ -1,14 +1,15 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { useMutation } from "@tanstack/react-query";
+import { UseMutationResult, UseQueryResult, useMutation, useQuery } from "@tanstack/react-query";
 import useApi from "./useApi";
-import { Exercise } from "@/types/fitnessTypes";
+import { Exercise, MuscleGroupWithExercises } from "@/types/fitnessTypes";
 
 const useExerciseService = (): {
   searchExercise: (name: string) => Promise<any>;
   createExercise: (body: Record<any, any>) => Promise<any>;
   fetchMuscleGroupsWithExercises: () => Promise<any>;
   fetchExerciseDetails: (exerciseId: number) => Promise<Exercise>;
-  deleteSetFromExerciseSession: any;
+  deleteSetFromExerciseSession: () => void;
+  listQuery: () => UseQueryResult<MuscleGroupWithExercises[]>
 } => {
   const { token } = useAuth();
   const { get, post } = useApi(token as string);
@@ -48,12 +49,31 @@ const useExerciseService = (): {
     mutationKey: ["remove-set-from-exercise"],
   });
 
+  const fetchMuscleGroups = async (): Promise<
+    { id: number; name: string }[]
+  > => {
+    const data = await get(`workouts/muscle-group/list/`);
+    return data;
+  };
+
+  const listQuery = useQuery({
+    queryFn: () => fetchMuscleGroups(),
+    initialData: [
+      {
+        id: 1,
+        name: "Muscle",
+      },
+    ],
+    queryKey: ["muscle-groups-list"],
+  });
+
   return {
     searchExercise,
     createExercise,
     fetchMuscleGroupsWithExercises,
     fetchExerciseDetails,
     deleteSetFromExerciseSession,
+    listQuery,
   };
 };
 

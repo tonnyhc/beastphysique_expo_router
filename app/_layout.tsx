@@ -68,8 +68,8 @@ function RootLayoutNav() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar />
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar />
         <AuthProvider>
           <ThemeProvider>
             <Stack
@@ -82,6 +82,7 @@ function RootLayoutNav() {
               <Stack.Screen name="profile-setup" />
               <Stack.Screen name="create-workout-plan" />
               <Stack.Screen name="create-workout" />
+              <Stack.Screen name="create-exercise" />
             </Stack>
           </ThemeProvider>
         </AuthProvider>
