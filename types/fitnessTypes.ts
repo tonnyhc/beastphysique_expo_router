@@ -2,7 +2,6 @@ import { ImagePickerAsset } from "expo-image-picker";
 import { Profile } from "./profileTypes";
 
 export type ExerciseSet = {
-  forDelete?: boolean;
   weight: string;
   reps: string;
   min_reps: string;
@@ -89,3 +88,8 @@ export type MuscleGroup = {
   id: number,
   name: string
 }
+
+export type WorkoutPlanState = {
+  planName: string;
+  workouts: Workout[];
+};

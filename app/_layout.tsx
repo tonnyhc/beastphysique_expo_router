@@ -14,6 +14,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
+import CreateWorkoutPlanProvider from "@/contexts/CreateWorkoutPlan";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -72,18 +73,20 @@ function RootLayoutNav() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <AuthProvider>
           <ThemeProvider>
-            <Stack
-              screenOptions={{ headerShown: false }}
-              initialRouteName="(tabs)"
-            >
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="(auth)" />
-              <Stack.Screen name="account" />
-              <Stack.Screen name="profile-setup" />
-              <Stack.Screen name="create-workout-plan" />
-              <Stack.Screen name="create-workout" />
-              <Stack.Screen name="create-exercise" />
-            </Stack>
+            <CreateWorkoutPlanProvider>
+              <Stack
+                screenOptions={{ headerShown: false }}
+                initialRouteName="(tabs)"
+              >
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="(auth)" />
+                <Stack.Screen name="account" />
+                <Stack.Screen name="profile-setup" />
+                <Stack.Screen name="create-exercise" />
+                <Stack.Screen name="create-workout" />
+                <Stack.Screen name="create-workout-plan" />
+              </Stack>
+            </CreateWorkoutPlanProvider>
           </ThemeProvider>
         </AuthProvider>
       </GestureHandlerRootView>

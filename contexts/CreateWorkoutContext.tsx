@@ -1,11 +1,18 @@
 import useExerciseService from "@/hooks/service/useExerciseService";
 import useWorkoutService from "@/hooks/service/useWorkoutService";
-import { Exercise, ExerciseFromSearch, ExerciseSession, Workout, WorkoutCreate } from "@/types/fitnessTypes";
+import {
+  Exercise,
+  ExerciseFromSearch,
+  ExerciseSession,
+  ExerciseSet,
+  Workout,
+  WorkoutCreate,
+} from "@/types/fitnessTypes";
 import { emptySet } from "@/utils/mapData";
 import { UseMutationResult } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { ReactNode, createContext, useContext, useState } from "react";
-
+import { useCreateWorkoutPlanContext } from "./CreateWorkoutPlan";
 
 const emptyWorkoutForCreate: WorkoutCreate = {
   name: "",
@@ -32,6 +39,7 @@ type WorkoutContextProps = {
   deleteExercise: (exerciseIndex: number) => void;
   submitCreate: () => UseMutationResult;
   submitEdit: () => UseMutationResult;
+  validateWorkout: () => boolean;
 };
 
 const CreateWorkoutContext = createContext<WorkoutContextProps>({
@@ -48,22 +56,31 @@ const CreateWorkoutContext = createContext<WorkoutContextProps>({
   ) => {},
   editExerciseNotes: (exerciseIndex: number, value: string) => {},
   deleteExercise: (exerciseIndex: number) => {},
-  submitCreate: () => ({} as UseMutationResult),
+  // submitCreate: () => ({} as UseMutationResult),
   submitEdit: () => ({} as UseMutationResult),
+  validateWorkout: () => false,
 });
 
 interface CreateWorkoutProviderProps {
   children: ReactNode;
+  workoutToEditIndex?: string;
   workoutToEdit?: Workout;
   callbackFn?: (workout: Workout) => void;
+  makeCreateRequest: boolean;
 }
 
 export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
   children,
   workoutToEdit,
+  workoutToEditIndex,
   callbackFn,
+  makeCreateRequest,
 }) => {
-
+  const { workoutPlan, editWorkout: editWorkoutContext } =
+    useCreateWorkoutPlanContext();
+  if (workoutToEditIndex) {
+    workoutToEdit = workoutPlan.workouts[Number(workoutToEditIndex)];
+  }
   const [workout, setWorkout] = useState<WorkoutCreate>(
     workoutToEdit ? workoutToEdit : emptyWorkoutForCreate
   );
@@ -76,7 +93,6 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     }));
   };
   const addExercise = (exercises: Exercise[]) => {
-    console.log('enters')
     const newExercises: ExerciseSession[] = [];
     for (let exercise of exercises) {
       newExercises.push({
@@ -140,6 +156,10 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     const exercisesCopy = [...workout.exercises];
     const exerciseToUpdate = exercisesCopy[exerciseIndex];
     const set = exerciseToUpdate.sets[setIndex];
+    if (value.toString().includes(",")) {
+      value = value.toString().replace(",", ".");
+      value = Number(value);
+    }
     set[propertyName] = value;
     setWorkout((oldWorkout) => ({
       ...oldWorkout,
@@ -154,28 +174,67 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
       exercises: exercisesCopy,
     }));
   };
-  const submitCreate = () => {
-    const { mutate, data } = createWorkout;
-    mutate(workout, {
-      onSuccess: (data: Workout) => {
-        if (callbackFn) {
-          const arrayWorkouts: Workout[] = [data];
+  // const submitCreate = () => {
+  //   const { mutate, data } = createWorkout;
+  //   if (makeCreateRequest) {
+  //     mutate(workout, {
+  //       onSuccess: (data: Workout) => {
+  //         if (callbackFn) {
+  //           // const arrayWorkouts: Workout[] = [data];
 
-          callbackFn(arrayWorkouts);
-          navigation.navigate("WorkoutPlan");
-        }
-      },
-    });
-
-    return data;
-  };
+  //           callbackFn(data);
+  //           router.back();
+  //         }
+  //       },
+  //     });
+  //     return data;
+  //   }
+  //   if (callbackFn) {
+  //     callbackFn(workout);
+  //     router.back();
+  //   }
+  // };
   const submitEdit = () => {
     const { mutate, data } = editWorkout;
-    mutate(workout);
-    router.back();
-
-    return data;
+    if (makeCreateRequest) {
+      mutate(workout);
+      router.back();
+      return data;
+    }
+    editWorkoutContext(workout);
   };
+
+  const validateWorkout = () => {
+    if (!workout.name) {
+      return false;
+    }
+    if (workout.exercises.length <= 0) {
+      return false;
+    }
+    for (let exercise of workout.exercises) {
+      if (exercise.sets.length <= 0) {
+        return false;
+      }
+      for (let set of exercise.sets) {
+        // if the set does not have weight or is not set as bodyweight set, return false
+
+        if (!set.weight && !set.bodyweight) {
+          console.log(" weight error");
+          return false;
+        }
+        // if the set does not have max reps, min reps and  reps that means that the set must be to failure
+        if (!set.max_reps || !set.min_reps || !set.reps) {
+          // if the set is not "to_failure" return false
+          if (!set.to_failure) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+    // return true;
+  };
+
   const context = {
     workout,
     changeWorkoutName,
@@ -185,8 +244,9 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     editSetProperty,
     editExerciseNotes,
     deleteExercise,
-    submitCreate,
+    // submitCreate,
     submitEdit,
+    validateWorkout,
   };
   return (
     <CreateWorkoutContext.Provider value={context}>

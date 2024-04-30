@@ -21,7 +21,7 @@ const WorkoutsLayout: React.FC = () => {
                   <Button
                     text="Create"
                     type="text"
-                    onPress={() => router.push("/create-workout/")}
+                    onPress={() => router.push("/create-workout-plan/")}
                   />
                 </View>
               }

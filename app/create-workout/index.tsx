@@ -6,28 +6,55 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useCreateWorkoutContext } from "@/contexts/CreateWorkoutContext";
-import { ExerciseSession } from "@/types/fitnessTypes";
+import { ExerciseSession, Workout } from "@/types/fitnessTypes";
 import ExerciseSessionCreationCard from "@/components/exercise/ExerciseSessionCreationCard";
 import BoardIcon from "@/icons/BoardIcon";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import StackHeader from "@/components/common/StackHeader";
 import { t } from "i18next";
 import CloseIcon from "@/icons/CloseIcon";
+import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlan";
+import { useEffect, useState } from "react";
 
 const CreateWorkoutScreen: React.FC = () => {
-  const { workout, changeWorkoutName, submitCreate } = useCreateWorkoutContext();
+  const { workout, changeWorkoutName, validateWorkout } =
+    useCreateWorkoutContext();
+  const params = useLocalSearchParams();
+  const { workoutToEditIndex } = params;
   const { colors } = useTheme();
+  const { addWorkout, editWorkout } = useCreateWorkoutPlanContext();
+  const [enabledSubmit, setEnabledSubmit] = useState<boolean>(false);
+  useEffect(() => {
+    setEnabledSubmit(validateWorkout());
+  }, [workout]);
+  
+  // a hook for creating a workout in the server
+  // const { createWorkout } = useWorkoutService();
+  // const { mutate, data, isPending, isError, error } = createWorkout;
+
+  const handleSubmit = (workout: Workout) => {
+    if (workoutToEditIndex) {
+      editWorkout(Number(workoutToEditIndex), workout);
+      return router.back();
+    }
+    addWorkout(workout);
+    router.back();
+  };
+
+
+
   return (
-    <Screen styles={{paddingTop: 0}}>
+    <Screen styles={{ paddingTop: 0 }}>
       <StackHeader
-      headerStyles={{paddingHorizontal: 0}}
+        headerStyles={{ paddingHorizontal: 0 }}
         headerTitle="Create workout"
         headerRight={
           <Button
-          buttonStyles={{alignSelf: 'flex-end', paddingRight: 0}}
+            buttonStyles={{ alignSelf: "flex-end", paddingRight: 0 }}
             type="text"
+            disabled={!enabledSubmit}
             text={t("common.done")}
-            onPress={() => submitCreate()}
+            onPress={() => handleSubmit(workout as Workout)}
           />
         }
         headerLeft={

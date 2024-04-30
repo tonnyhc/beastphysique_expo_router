@@ -6,18 +6,20 @@ import Screen from "@/components/common/Screen";
 import Input from "@/components/common/Input";
 import BoardIcon from "@/icons/BoardIcon";
 import Button from "@/components/common/Button";
-
+import { router } from "expo-router";
+import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlan";
+import { useMutation } from "@tanstack/react-query";
+import CreateWorkoutPlanWorkoutCard from "@/components/workout-plans/CreateWorkoutPlanWorkoutCard";
 
 const CreateCustomWorkoutPlan: React.FC = () => {
   const { colors } = useTheme();
-//   const { workoutPlan, changePlanName } = useCreateWorkoutPlanContext();
-//   console.log(workoutPlan.workouts);
+  const { workoutPlan, changePlanName } = useCreateWorkoutPlanContext();
   // const { mutate, isPending, error } = useMutation({
   //   mutationFn: () => createWorkoutPlan(),
   //   onSuccess: () => navigation.navigate("WorkoutPlans"),
   // });
   return (
-    <Screen>
+    <Screen closeKeyboardOnClick>
       <ScrollView
         style={{ flexGrow: 1 }}
         contentContainerStyle={{ paddingHorizontal: 4 }}
@@ -25,10 +27,8 @@ const CreateCustomWorkoutPlan: React.FC = () => {
         {/* Workout plan name */}
         <View>
           <Input
-            // value={workoutPlan.planName}
-            value=""
-            // onChange={(value: string) => changePlanName(value)}
-            onChange={() => {}}
+            value={workoutPlan.planName}
+            onChange={(value: string) => changePlanName(value)}
             placeholder="Workout plan name"
             leftIcon={<BoardIcon size={24} color={colors.helperText} />}
           />
@@ -49,25 +49,33 @@ const CreateCustomWorkoutPlan: React.FC = () => {
             gap: 10,
           }}
         >
-          {/* {workoutPlan.workouts.map((workout, index) => (
-            <CreateCustomWorkoutPlanWorkoutCard
+          {workoutPlan.workouts.map((workout, index) => (
+            <CreateWorkoutPlanWorkoutCard
               workoutIndex={index}
               workout={workout}
               key={`workout.id+${index}`}
             />
-          ))} */}
+          ))}
         </View>
 
         <Button
           buttonStyles={{ alignSelf: "center", marginTop: 35 }}
           text="Add workout"
           type="text"
-          onPress={() => navigation.navigate("WorkoutSearch")}
+          onPress={() =>
+            router.push({
+              pathname: "/create-workout/",
+              params: {
+                callback: "addToWorkoutPlan",
+                makeRequest: "false",
+              },
+            })
+          }
         />
       </ScrollView>
-      <View style={{ position: "absolute", bottom: 30, left: 100, right: 100 }}>
+      {/* <View style={{ position: "absolute", bottom: 30, left: 100, right: 100 }}>
         <Button text="Submit" onPress={() => {}} />
-      </View>
+      </View> */}
     </Screen>
   );
 };

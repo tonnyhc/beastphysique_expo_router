@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import useApi from "./useApi";
 import { Workout } from "@/types/fitnessTypes";
 
-const useWorkoutServices = () => {
+const useWorkoutPlanServices = () => {
   const { token } = useAuth();
   const { post, get } = useApi(token);
 
@@ -26,4 +26,4 @@ const useWorkoutServices = () => {
   return { createWorkoutPlan, getWorkoutPlansByUser };
 };
 
-export default useWorkoutServices;
+export default useWorkoutPlanServices;
