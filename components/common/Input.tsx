@@ -120,13 +120,14 @@ const Input: React.FC<InputProps> = ({
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      color: colors.secondaryText,
-      fontFamily: "RobotoRegular",
-      fontSize: 16,
+      color: colors.primaryText,
+      fontFamily: "RobotoMedium",
+      fontSize: 18,
     },
     placeholderText: {
       fontSize: 18,
       fontFamily: "RobotoMedium",
+      color: colors.secondaryText
     },
     helperRow: {
       flexDirection: "row",
@@ -167,7 +168,7 @@ const Input: React.FC<InputProps> = ({
           defaultValue={defaultValue}
           style={stylesheet.input}
           placeholder={placeholder}
-          placeholderTextColor={"#8A8A8A"}
+          placeholderTextColor={colors.secondaryText}
           value={value}
           secureTextEntry={securedPassword}
           onChangeText={onChange}
