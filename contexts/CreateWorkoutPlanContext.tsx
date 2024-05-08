@@ -13,6 +13,7 @@ type CreateWorkoutPlanContextProps = {
   deleteWorkout: (workoutIndex: number) => void;
   editWorkout: (workoutIndex: number, workout: Workout) => void;
   resetContextState: () => void;
+  isWorkoutPlanValid: boolean;
 };
 
 const CreateWorkoutPlanContext = createContext<CreateWorkoutPlanContextProps>({
@@ -22,6 +23,7 @@ const CreateWorkoutPlanContext = createContext<CreateWorkoutPlanContextProps>({
   deleteWorkout: () => {},
   editWorkout: (workoutIndex: number, workout: Workout) => {},
   resetContextState: () => {},
+  isWorkoutPlanValid: false,
 });
 
 interface CreateWorkoutPlanProviderProps {
@@ -65,6 +67,16 @@ const CreateWorkoutPlanProvider: React.FC<CreateWorkoutPlanProviderProps> = ({
     }));
   };
 
+  const validateWorkoutPlan = () => {
+    if (!workoutPlan.planName) {
+      return false;
+    }
+    if (workoutPlan.workouts.length <= 0) {
+      return false;
+    }
+    return true;
+  };
+
   const resetContextState = () => {
     setWorkoutPlan(emptyWorkoutPlan);
   };
@@ -75,6 +87,7 @@ const CreateWorkoutPlanProvider: React.FC<CreateWorkoutPlanProviderProps> = ({
     deleteWorkout,
     editWorkout,
     resetContextState,
+    isWorkoutPlanValid: validateWorkoutPlan(),
   };
   return (
     <CreateWorkoutPlanContext.Provider value={context}>

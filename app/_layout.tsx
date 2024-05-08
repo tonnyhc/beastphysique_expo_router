@@ -14,7 +14,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
-import CreateWorkoutPlanProvider from "@/contexts/CreateWorkoutPlan";
+import CreateWorkoutPlanProvider from "@/contexts/CreateWorkoutPlanContext";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,

@@ -3,6 +3,7 @@ import React from "react";
 import Modal from "react-native-modal";
 import { useTheme } from "@/contexts/ThemeContext";
 import Button from "./Button";
+import { router } from "expo-router";
 
 interface DiscardChangesModalProps {
   closeModal: () => void;
@@ -52,7 +53,6 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
   return (
     <Modal
       propagateSwipe={true}
-      //   swipeDirection="down"
       isVisible={visible}
       animationIn="slideInUp"
       style={styles.modal}
@@ -76,7 +76,10 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
               }}
               type="text"
               text="Discard"
-              onPress={() => onDiscard()}
+              onPress={() => {
+                closeModal()
+                return onDiscard()
+              }}
             />
           </View>
           <View style={styles.buttonWrapper}>

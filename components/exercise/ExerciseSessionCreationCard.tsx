@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  Alert,
 } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import ExerciseSessionMoreModal from "./ExerciseSessionMoreModal";
@@ -16,6 +17,9 @@ import ExerciseSessionNotesModal from "./ExerciseSessionNotesModal";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import MoreDotsIcon from "@/icons/MoreDotsIcon";
+import CopyIcon from "@/icons/CopyIcon";
+import { dir } from "i18next";
+import * as Haptics from "expo-haptics";
 
 interface ExerciseSessionCreationCardProps {
   exercise: ExerciseSession;
@@ -32,23 +36,44 @@ const ExerciseSessionCreationCard: React.FC<
     editSetProperty,
     deleteExercise,
     editExerciseNotes,
+    duplicateExerciseSet,
   } = useCreateWorkoutContext();
   const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState<boolean>(false);
   const [isRepRangeModalOpen, setIsRepRangeModalOpen] =
     useState<boolean>(false);
   const [setIndex, setSetIndex] = useState<number | null>(null);
+
+  const deleteExerciseAlert = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    Alert.alert(
+      `Delete "${exercise.exercise.name}"`,
+      `Are you sure you want to delete this exercise?`,
+      [
+        {
+          text: "Delete",
+          onPress: () => deleteExercise(exerciseIndex),
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
   const renderRightSetActions = (setIndex: number, setId: number) => {
     return (
       <TouchableOpacity
-        style={{ height: "100%", justifyContent: "flex-end" }}
+        style={{ height: "100%", justifyContent: "flex-start" }}
         onPress={() => deleteSetFromExercise(exerciseIndex, setIndex, setId)}
       >
         <Animated.View
           style={{
             backgroundColor: colors.error,
             justifyContent: "center",
-            height: "50%",
+            height: "100%",
             alignItems: "center",
             marginBottom: 16,
             paddingHorizontal: 48,
@@ -60,6 +85,7 @@ const ExerciseSessionCreationCard: React.FC<
               fontSize: 16,
               fontFamily: "RobotoRegular",
               color: colors.white,
+              textAlign: "center",
             }}
           >
             Delete
@@ -68,11 +94,35 @@ const ExerciseSessionCreationCard: React.FC<
       </TouchableOpacity>
     );
   };
+
+  const renderLeftSetActions = (setIndex: number, setId: number) => {
+    return (
+      <TouchableOpacity
+        style={{ height: "100%" }}
+        onPress={() => duplicateExerciseSet(exerciseIndex, setIndex)}
+      >
+        <Animated.View
+          style={{
+            backgroundColor: "#F59300",
+            justifyContent: "center",
+            height: "100%",
+            alignItems: "center",
+            marginBottom: 16,
+            paddingHorizontal: 48,
+            marginRight: 48,
+          }}
+        >
+          <CopyIcon size={24} color={colors.primaryText} />
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
   const renderRightExerciseActions = () => {
     return (
       <TouchableOpacity
         style={{ height: "100%", justifyContent: "flex-end" }}
-        onPress={() => deleteExercise(exerciseIndex)}
+        onPress={() => deleteExerciseAlert()}
       >
         <Animated.View
           style={{
@@ -187,9 +237,8 @@ const ExerciseSessionCreationCard: React.FC<
           backgroundColor: colors.bg,
         }}
         renderRightActions={renderRightExerciseActions}
-        overshootRight={true}
-        onSwipeableWillOpen={() => deleteExercise(exerciseIndex)}
         friction={1}
+        onSwipeableOpen={() => deleteExerciseAlert()}
       >
         <View style={styles.card}>
           <View style={styles.headingRow}>
@@ -202,9 +251,16 @@ const ExerciseSessionCreationCard: React.FC<
                 renderRightActions={() =>
                   renderRightSetActions(index, item.id as number)
                 }
+                renderLeftActions={() =>
+                  renderLeftSetActions(index, item.id as number)
+                }
                 overshootRight={true}
-                onSwipeableWillOpen={() =>
-                  deleteSetFromExercise(exerciseIndex, index, item.id)
+                overshootFriction={5}
+                overshootLeft={true}
+                onSwipeableOpen={(direction) =>
+                  direction == "left"
+                    ? duplicateExerciseSet(exerciseIndex, index)
+                    : deleteSetFromExercise(exerciseIndex, index)
                 }
                 friction={1}
               >
@@ -220,6 +276,11 @@ const ExerciseSessionCreationCard: React.FC<
                     <Text style={styles.proprtyText}>Reps</Text>
                     {item.to_failure.toString() === "false" ? (
                       <Input
+                        borderStyles={{
+                          paddingLeft: 4,
+                          paddingRight: 4,
+                          justifyContent: "center",
+                        }}
                         inputMode="numeric"
                         styles={{
                           width: 80,
@@ -247,6 +308,11 @@ const ExerciseSessionCreationCard: React.FC<
                     <Text style={styles.proprtyText}>Weight (kg)</Text>
                     {!item.bodyweight ? (
                       <Input
+                        borderStyles={{
+                          paddingLeft: 4,
+                          paddingRight: 4,
+                          justifyContent: "center",
+                        }}
                         inputMode="decimal"
                         styles={{
                           minHeight: 48,

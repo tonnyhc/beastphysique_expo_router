@@ -12,6 +12,7 @@ const WorkoutsLayout: React.FC = () => {
     <Stack>
       <Stack.Screen
         options={{
+          gestureEnabled: false,
           header: () => (
             <StackHeader
               headerLeft={<LogoIcon size={42} color={colors.primaryText} />}
@@ -21,7 +22,7 @@ const WorkoutsLayout: React.FC = () => {
                   <Button
                     text="Create"
                     type="text"
-                    onPress={() => router.push("/create-workout-plan/")}
+                    onPress={() => router.replace("/create-workout-plan/")}
                   />
                 </View>
               }

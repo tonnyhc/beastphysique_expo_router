@@ -13,7 +13,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import StackHeader from "@/components/common/StackHeader";
 import { t } from "i18next";
 import CloseIcon from "@/icons/CloseIcon";
-import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlan";
+import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlanContext";
 import { useEffect, useState } from "react";
 
 const CreateWorkoutScreen: React.FC = () => {

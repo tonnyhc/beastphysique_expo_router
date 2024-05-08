@@ -1,8 +1,7 @@
-import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlan";
+import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlanContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { ExerciseSession, Workout } from "@/types/fitnessTypes";
-import { useNavigation } from "@react-navigation/native";
-
+import * as Haptics from "expo-haptics";
 import { useState } from "react";
 import {
   TouchableOpacity,
@@ -24,11 +23,16 @@ interface CreateWorkoutPlanWorkoutCardProps {
 }
 
 const CreateWorkoutPlanWorkoutCard: React.FC<
-CreateWorkoutPlanWorkoutCardProps
+  CreateWorkoutPlanWorkoutCardProps
 > = ({ workout, workoutIndex }) => {
   const { colors } = useTheme();
   const { deleteWorkout } = useCreateWorkoutPlanContext();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+  const onDeleteWorkout = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    setDeleteModal(true);
+  };
 
   const styles = StyleSheet.create({
     card: {
@@ -81,7 +85,7 @@ CreateWorkoutPlanWorkoutCardProps
           justifyContent: "flex-end",
           alignItems: "center",
         }}
-        onPress={() => setDeleteModal(true)}
+        onPress={() => onDeleteWorkout()}
       >
         <Animated.View
           style={{
@@ -156,7 +160,7 @@ CreateWorkoutPlanWorkoutCardProps
         friction={1}
         renderRightActions={renderRightActions}
         overshootRight={true}
-        onSwipeableWillOpen={() => setDeleteModal(true)}
+        onSwipeableWillOpen={() => onDeleteWorkout()}
       >
         <TouchableWithoutFeedback
           onPress={() =>
@@ -165,7 +169,7 @@ CreateWorkoutPlanWorkoutCardProps
               params: {
                 workoutToEditIndex: workoutIndex.toString(),
                 makeRequest: workout.id ? "true" : "false",
-                editWorkout: 'true'
+                editWorkout: "true",
               },
             })
           }

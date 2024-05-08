@@ -1,5 +1,6 @@
 import useExerciseService from "@/hooks/service/useExerciseService";
 import useWorkoutService from "@/hooks/service/useWorkoutService";
+import * as Haptics from "expo-haptics";
 import {
   Exercise,
   ExerciseFromSearch,
@@ -12,7 +13,7 @@ import { emptySet } from "@/utils/mapData";
 import { UseMutationResult } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { ReactNode, createContext, useContext, useState } from "react";
-import { useCreateWorkoutPlanContext } from "./CreateWorkoutPlan";
+import { useCreateWorkoutPlanContext } from "./CreateWorkoutPlanContext";
 
 const emptyWorkoutForCreate: WorkoutCreate = {
   name: "",
@@ -24,6 +25,7 @@ type WorkoutContextProps = {
   changeWorkoutName: (name: string) => void;
   addExercise: (exercises: Exercise[] | ExerciseFromSearch) => void;
   addSetToExercise: (exerciseIndex: number) => void;
+  duplicateExerciseSet: (exerciseIndex: number ,setIndex: number) => void;
   deleteSetFromExercise: (
     exerciseIndex: number,
     setIndex: number,
@@ -46,6 +48,7 @@ const CreateWorkoutContext = createContext<WorkoutContextProps>({
   workout: emptyWorkoutForCreate,
   changeWorkoutName: () => {},
   addExercise: (exercises: ExerciseSession[]) => {},
+  duplicateExerciseSet: (exerciseIndex: number ,setIndex: number) => {},
   addSetToExercise: (exerciseIndex: number) => {},
   deleteSetFromExercise: (exerciseIndex: number, setIndex: number) => {},
   editSetProperty: (
@@ -121,6 +124,22 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
       ...oldWorkout,
       exercises: [...updatedExercises],
     }));
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+  };
+
+  const duplicateExerciseSet = (exerciseIndex: number, setIndex: number) => {
+    const updatedExercises = [...workout.exercises];
+    updatedExercises.map((exercise, index) => {
+      if (index === exerciseIndex) {
+        const setCopy = { ...exercise.sets[setIndex] };
+        return exercise.sets.push(setCopy);
+      }
+    });
+    setWorkout((oldWorkout) => ({
+      ...oldWorkout,
+      exercises: [...updatedExercises],
+    }));
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
   const deleteSetFromExercise = (
     exerciseIndex: number,
@@ -136,6 +155,7 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
       ...oldWorkout,
       exercises: [...updatedExercises],
     }));
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
 
   const deleteExercise = (exerciseIndex: number) => {
@@ -158,7 +178,7 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     const set = exerciseToUpdate.sets[setIndex];
     if (value.toString().includes(",")) {
       value = value.toString().replace(",", ".");
-      value = Number(value);
+      value = value;
     }
     set[propertyName] = value;
     setWorkout((oldWorkout) => ({
@@ -240,6 +260,7 @@ export const CreateWorkoutProvider: React.FC<CreateWorkoutProviderProps> = ({
     changeWorkoutName,
     addExercise,
     addSetToExercise,
+    duplicateExerciseSet,
     deleteSetFromExercise,
     editSetProperty,
     editExerciseNotes,

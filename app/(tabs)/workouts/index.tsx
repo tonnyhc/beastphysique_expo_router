@@ -12,6 +12,8 @@ import useRefreshControl from "@/hooks/useRefreshControl";
 import { useQuery } from "@tanstack/react-query";
 import WorkoutPlanCard from "@/components/workout-plans/WorkoutPlanCard";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect } from "react";
+import { router } from "expo-router";
 
 const Workouts: React.FC = () => {
   const { colors } = useTheme();
@@ -27,6 +29,10 @@ const Workouts: React.FC = () => {
     refreshFn: refetch,
     isLoading: isLoading,
   });
+
+  useEffect(() => {
+    router.canDismiss() ? router.dismissAll() : undefined;
+  }, []);
 
   return (
     <Screen>

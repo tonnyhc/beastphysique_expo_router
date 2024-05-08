@@ -123,6 +123,7 @@ const Input: React.FC<InputProps> = ({
       color: colors.primaryText,
       fontFamily: "RobotoMedium",
       fontSize: 18,
+      // textAlign: 'center',
     },
     placeholderText: {
       fontSize: 18,

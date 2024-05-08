@@ -2,7 +2,7 @@ import BackButton from "@/components/common/BackButton";
 import Button from "@/components/common/Button";
 import StackHeader from "@/components/common/StackHeader";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
-import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlan";
+import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlanContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Stack, router, useGlobalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
