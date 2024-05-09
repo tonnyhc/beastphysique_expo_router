@@ -108,7 +108,18 @@
         },
         "profile": {
             "edit_profile": "Редактирай профила"
+        },
+        "create_workout": {
+            "title": "Създай тренировка",
+            "addExercises": "Добави упражнение",
+            "workoutNameLabel": "Име на тренировката"
+        },
+        "create_workout_plan": {
+            "addWorkout": "Добави тренировка",
+            "noWorkouts": "Все още не сте добавили тренировки",
+            "planNameLabel": "Име на тренировъчният план"
         }
+        
     
         
     },

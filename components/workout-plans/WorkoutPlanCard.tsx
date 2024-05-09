@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { WorkoutPlan } from "@/types/fitnessTypes";
+import { router } from "expo-router";
 
 interface WorkoutPlanCardProps {
   plan: WorkoutPlan;
@@ -45,8 +46,9 @@ const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({ plan }) => {
   });
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("WorkoutPlanDetails", { planId: plan.id })
+      onPress={
+        () => router.push(`/(tabs)/workouts/workout-plan/${plan.id}`)
+        // navigation.navigate("WorkoutPlanDetails", { planId: plan.id })
       }
       style={styles.cardWrapper}
     >
@@ -56,7 +58,9 @@ const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({ plan }) => {
           <Text style={{ color: colors.primaryText }}>
             Workouts: {plan.total_workouts}
           </Text>
-          <Text style={{ color: colors.primaryText }}>{plan.created_at.toString()}</Text>
+          <Text style={{ color: colors.primaryText }}>
+            {plan.created_at.toString()}
+          </Text>
         </View>
         <Text style={styles.creator}>{plan.created_by.full_name}</Text>
       </View>

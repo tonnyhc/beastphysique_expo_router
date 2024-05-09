@@ -47,7 +47,7 @@ const CreateWorkoutScreen: React.FC = () => {
     <Screen styles={{ paddingTop: 0 }}>
       <StackHeader
         headerStyles={{ paddingHorizontal: 0 }}
-        headerTitle="Create workout"
+        headerTitle={t('screens.create_workout.title')}
         headerRight={
           <Button
             buttonStyles={{ alignSelf: "flex-end", paddingRight: 0 }}
@@ -75,10 +75,11 @@ const CreateWorkoutScreen: React.FC = () => {
         contentContainerStyle={{ gap: 35, flexGrow: 1, paddingBottom: 250 }}
       >
         <Input
+        label={t('screens.create_workout.workoutNameLabel')}
           leftIcon={<BoardIcon size={18} color={colors.helperText} />}
           onChange={(value: string) => changeWorkoutName(value)}
           value={workout.name}
-          placeholder="Workout name"
+          placeholder="Best legs workout..."
         />
 
         <View>
@@ -95,7 +96,7 @@ const CreateWorkoutScreen: React.FC = () => {
           </View>
         </View>
         <Button
-          text="Add Exercises"
+          text={t("screens.create_workout.addExercises")}
           onPress={() => router.push("/create-workout/searchExercise")}
         />
       </KeyboardAwareScrollView>

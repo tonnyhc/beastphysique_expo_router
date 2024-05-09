@@ -46,7 +46,7 @@ const Workouts: React.FC = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           renderItem={({ item, index }) => (
-            <WorkoutPlanCard key={index} plan={item} />
+            <WorkoutPlanCard key={index || item.id} plan={item} />
           )}
         />
       </View>

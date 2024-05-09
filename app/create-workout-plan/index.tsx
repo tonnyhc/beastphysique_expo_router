@@ -9,6 +9,7 @@ import Button from "@/components/common/Button";
 import { router, useNavigation } from "expo-router";
 import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlanContext";
 import CreateWorkoutPlanWorkoutCard from "@/components/workout-plans/CreateWorkoutPlanWorkoutCard";
+import { t } from "i18next";
 
 const CreateWorkoutPlan: React.FC = () => {
   const { colors } = useTheme();
@@ -22,10 +23,11 @@ const CreateWorkoutPlan: React.FC = () => {
         {/* Workout plan name */}
         <View>
           <Input
+          label={t('screens.create_workout_plan.planNameLabel')}
             value={workoutPlan.planName}
             onChange={(value: string) => changePlanName(value)}
-            placeholder="Workout plan name"
-            leftIcon={<BoardIcon size={24} color={colors.helperText} />}
+            placeholder="My good plan..."
+            leftIcon={<BoardIcon size={18} color={colors.helperText} />}
           />
         </View>
 
@@ -44,7 +46,7 @@ const CreateWorkoutPlan: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              No workouts added yet!
+              {t('screens.create_workout_plan.noWorkouts')}
             </Text>
           ) : null}
           <View
@@ -64,7 +66,7 @@ const CreateWorkoutPlan: React.FC = () => {
 
         <Button
           buttonStyles={{ alignSelf: "center", marginTop: 15 }}
-          text="Add workout"
+          text={t('screens.create_workout_plan.addWorkout')}
           type="text"
           onPress={() =>
             router.push({

@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import useApi from "./useApi";
-import { Workout } from "@/types/fitnessTypes";
+import { Workout, WorkoutPlan } from "@/types/fitnessTypes";
 
 const useWorkoutPlanServices = () => {
   const { token } = useAuth();
@@ -23,7 +23,13 @@ const useWorkoutPlanServices = () => {
       throw e;
     }
   };
-  return { createWorkoutPlan, getWorkoutPlansByUser };
+
+  const getWorkoutPlanById = async (id: number): Promise<WorkoutPlan> => {
+    const url = "workouts/workout-plan/details/" + id + "/";
+    return await get(url);
+  };
+
+  return { createWorkoutPlan, getWorkoutPlansByUser, getWorkoutPlanById };
 };
 
 export default useWorkoutPlanServices;

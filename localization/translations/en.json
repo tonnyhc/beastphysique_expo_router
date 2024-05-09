@@ -19,6 +19,9 @@
         "passwordHelperText": "Your password must be at least 9 characters and should include a combination of numbers, letters and special characters (!$@%).",
         "create": "Create"
     },
+    "workout": {
+        "workoutPlans": "Workout plans"
+    },
     "languages": {
         "en": "English",
         "bg": "Bulgarian"
@@ -109,6 +112,16 @@
         },
         "profile": {
             "edit_profile": "Edit profile"
+        },
+        "create_workout": {
+            "title": "Create workout",
+            "addExercises": "Add exercises",
+            "workoutNameLabel": "Workout name"
+        },
+        "create_workout_plan": {
+            "addWorkout": "Add workout",
+            "noWorkouts": "No workouts added yet!",
+            "planNameLabel": "Workout plan name"
         }
     },
     "components": {

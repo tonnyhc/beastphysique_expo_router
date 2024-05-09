@@ -30,7 +30,7 @@ const StackHeader: React.FC<StackHeaderProps> = ({
       ...headerStyles
     },
     headerTitle: {
-      fontSize: 18,
+      fontSize: 16,
       fontFamily: "RobotoMedium",
       color: colors.primaryText,
       textAlign: "center",
@@ -41,9 +41,9 @@ const StackHeader: React.FC<StackHeaderProps> = ({
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        <View style={{ flex: .5 }}>{headerLeft}</View>
+        <View style={{ flex: 1, alignItems: 'flex-start' }}>{headerLeft}</View>
         <Text style={styles.headerTitle}>{headerTitle}</Text>
-        <View style={{ flex: .5 }}>{headerRight}</View>
+        <View style={{ flex: 1, alignItems: 'flex-end' }}>{headerRight}</View>
       </View>
     </SafeAreaView>
   );
