@@ -1,4 +1,3 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import "react-native-gesture-handler";
 import "@/localization/i18n";
 
@@ -30,19 +29,18 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ArimaBold: require("../assets/fonts/arima/Arima-Bold.ttf"),
-    ArimaRegular: require("../assets/fonts/arima/Arima-Regular.ttf"),
-    RobotoRegular: require("../assets/fonts/roboto/Roboto-Regular.ttf"),
-    RobotoBold: require("../assets/fonts/roboto/Roboto-Bold.ttf"),
-    RobotoMedium: require("../assets/fonts/roboto/Roboto-Medium.ttf"),
-    RobotoSlabRegular: require("../assets/fonts/roboto-slab/RobotoSlab-Regular.ttf"),
-    RobotoSlabMedium: require("../assets/fonts/roboto-slab/RobotoSlab-Medium.ttf"),
-    RobotoSlabBold: require("../assets/fonts/roboto-slab/RobotoSlab-Bold.ttf"),
+    // SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    // ArimaBold: require("../assets/fonts/arima/Arima-Bold.ttf"),
+    // ArimaRegular: require("../assets/fonts/arima/Arima-Regular.ttf"),
+    // RobotoRegular: require("../assets/fonts/roboto/Roboto-Regular.ttf"),
+    // RobotoBold: require("../assets/fonts/roboto/Roboto-Bold.ttf"),
+    // RobotoMedium: require("../assets/fonts/roboto/Roboto-Medium.ttf"),
+    // RobotoSlabRegular: require("../assets/fonts/roboto-slab/RobotoSlab-Regular.ttf"),
+    // RobotoSlabMedium: require("../assets/fonts/roboto-slab/RobotoSlab-Medium.ttf"),
+    // RobotoSlabBold: require("../assets/fonts/roboto-slab/RobotoSlab-Bold.ttf"),
 
-    IntegralRegular: require("../assets/fonts/integral/integralcf-regular.otf"),
-    IntegralBold: require("../assets/fonts/integral/integralcf-bold.otf"),
-    ...FontAwesome.font,
+    // IntegralRegular: require("../assets/fonts/integral/integralcf-regular.otf"),
+    // IntegralBold: require("../assets/fonts/integral/integralcf-bold.otf"),
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.

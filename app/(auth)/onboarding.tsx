@@ -13,7 +13,9 @@ const Onboarding: React.FC = () => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
 
-  const videoUrl = require("@/assets/videos/onboarding-video.mp4");
+  // const videoUrl = require("@/assets/videos/onboarding-video.mp4");
+  const videoUrl =
+    "https://www.shutterstock.com/shutterstock/videos/1081513610/preview/stock-footage-two-diverse-business-men-discussing-financial-market-data-using-laptop-and-digital-tablet.webm";
   const { colors } = useTheme();
 
   React.useEffect(() => {
@@ -56,7 +58,7 @@ const Onboarding: React.FC = () => {
           <Video
             ref={video}
             style={{ flex: 1 }}
-            source={videoUrl}
+            source={{uri: videoUrl}}
             isMuted={true}
             useNativeControls={false}
             resizeMode={ResizeMode.COVER}

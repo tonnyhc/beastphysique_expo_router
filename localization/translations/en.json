@@ -96,7 +96,6 @@
             "choose_from_library": "Choose from library",
             "take_photo": "Take photo",
             "remove_photo": "Remove current photo"
-
         },
         "change_password": {
             "current_password": "Current password",
