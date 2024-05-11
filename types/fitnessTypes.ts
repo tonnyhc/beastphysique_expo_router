@@ -93,3 +93,13 @@ export type WorkoutPlanState = {
   planName: string;
   workouts: Workout[];
 };
+
+export type WorkoutSession = {
+  id: string | number;
+  name: string;
+  total_exercises: number;
+  total_sets: number;
+  total_weight_volume: number;
+  is_published: boolean;
+  exercises: ExerciseSession[];
+};

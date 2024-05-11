@@ -33,6 +33,9 @@ const WorkoutsLayout: React.FC = () => {
         }}
         name="index"
       />
+      <Stack.Screen name='workout' options={{
+        headerShown: false
+      }}/>
       <Stack.Screen
         options={{
           header: () => (

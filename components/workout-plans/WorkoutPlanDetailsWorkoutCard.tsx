@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Workout } from "@/types/fitnessTypes";
 import { useTheme } from "@/contexts/ThemeContext";
+import { router } from "expo-router";
 
 interface WorkoutPlanDetailsWorkoutCardProps {
   workout: Workout;
@@ -57,9 +58,7 @@ const WorkoutPlanDetailsWorkoutCard: React.FC<
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.push("WorkoutDetails", { workoutSessionId: workout.id })
-      }
+      onPress={() => router.navigate(`/(tabs)/workouts/workout/${workout.id}`)}
       style={styles.card}
     >
       {/* workout name and exc count */}
