@@ -14,7 +14,10 @@ import {
   useEffect,
   useState,
 } from "react";
+import * as Haptics from "expo-haptics";
 import { useCreateWorkoutContext } from "./CreateWorkoutContext";
+import { useUtilityContext } from "./UtilityContext";
+import TickIcon from "@/icons/TickIcon";
 
 interface CreateExerciseProviderProps {
   children: ReactNode;
@@ -35,6 +38,7 @@ const CreateExerciseContext = createContext<CreateExerciseContextProps>({});
 export const CreateExerciseProvider: React.FC<CreateExerciseProviderProps> = ({
   children,
 }) => {
+  const {setToast} = useUtilityContext()
   const [exerciseData, setExerciseData] = useState<CreateExerciseData>({
     name: "",
     targeted_muscle_groups: [],
@@ -49,7 +53,6 @@ export const CreateExerciseProvider: React.FC<CreateExerciseProviderProps> = ({
   const { addExercise } = useCreateWorkoutContext();
   const [isPublishDisabled, setIsPublishDisabled] = useState(false);
   const [isCreateDisabled, setIsCreateDisabled] = useState(false);
-  console.log(callbackOnCreate);
   useEffect(() => {
     const isNameEmpty = exerciseData.name === "";
     const isAnyValueEmpty = Object.values(exerciseData).some(
@@ -72,6 +75,8 @@ export const CreateExerciseProvider: React.FC<CreateExerciseProviderProps> = ({
       return createExercise(formData);
     },
     onSuccess: (data: Exercise[]) => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      setToast({type:"success", text1:"Created Successfully", text2: "The exercise have been created successfully", icon: <TickIcon size={36} color="#00DF80"/>})
       router.back();
       router.back();
     },
