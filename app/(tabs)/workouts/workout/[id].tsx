@@ -13,14 +13,17 @@ import Screen from "@/components/common/Screen";
 import WorkoutDetailsExerciseCard from "@/components/workout/WorkoutDetailsExerciseCard";
 import StackHeader from "@/components/common/StackHeader";
 import BackButton from "@/components/common/BackButton";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const WorkoutDetails: React.FC = () => {
   const { workoutSessionDetails } = useWorkoutService();
+  const { id } = useLocalSearchParams();
   // const workoutId = route.params.workoutSessionId;
-  const {colors} = useTheme()
-  const { data, refetch, isLoading, isError } = workoutSessionDetails(73);
+  const { colors } = useTheme();
+  const { data, refetch, isLoading, isError } = workoutSessionDetails(
+    id as unknown as number
+  );
   const { onRefresh, refreshing } = useRefreshControl({
     isLoading,
     refreshFn: refetch,
@@ -40,7 +43,11 @@ const WorkoutDetails: React.FC = () => {
     },
   });
   return (
-    <Screen>
+    <Screen
+      styles={{
+        paddingTop: 0,
+      }}
+    >
       <View style={styles.wrapper}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -48,16 +55,22 @@ const WorkoutDetails: React.FC = () => {
             <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
           }
         >
-      <StackHeader headerLeft={<BackButton onPress={() => router.back()}/>} headerTitle={workoutData.name} />
-
+          <StackHeader
+            headerStyles={{
+              paddingLeft: 0,
+              paddingRight: 0,
+            }}
+            headerLeft={<BackButton onPress={() => router.back()} />}
+            headerTitle={workoutData.name}
+          />
           {/* <ScrollView style={styles.exercisesWrapper}> */}
-            {workoutData.exercises.map((exercise, index) => (
-              <WorkoutDetailsExerciseCard
-                key={exercise.id}
-                index={index}
-                session={exercise}
-              />
-            ))}
+          {workoutData.exercises.map((exercise, index) => (
+            <WorkoutDetailsExerciseCard
+              key={exercise.id}
+              index={index}
+              session={exercise}
+            />
+          ))}
           {/* </ScrollView> */}
         </ScrollView>
       </View>
