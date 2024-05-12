@@ -17,7 +17,8 @@
         "weakPassword": "Слаба парола",
         "passwordsNotMatch": "Паролите не съвпадат!",
         "passwordHelperText": "Паролата ви трябва да съдържа поне 9 символа, комбинация от букви, цифри и специални символи (!$@%)",
-        "create": "Създаване"
+        "create": "Създаване",
+        "select": "Избери"
         
     },
     "languages": {
@@ -109,12 +110,26 @@
         "profile": {
             "edit_profile": "Редактирай профила"
         },
+        "create_exercise": {
+            "create_exercise": "Създай упражнение",
+            "name": "Име",
+            "targeted_muscle_groups": "Мускулни групи",
+            "can_be_bw": "Изпълнение със собствено тегло",
+            "publish_exercise": "Публикувай упражнение",
+            "video_tutorial": "Видео обяснение",
+            "information": "Информация за упражнението",
+            "tips": "Трикове & Съвети за изпълнение",
+            "information_placeholder": "Напишете информация за упражнението...",
+            "tips_placeholder": "Бъдете внимателни с ...",
+            "create_and_publish": "Създай & Публикувай"
+        },
         "create_workout": {
             "title": "Създай тренировка",
             "addExercises": "Добави упражнение",
             "workoutNameLabel": "Име на тренировката"
         },
         "create_workout_plan": {
+            "create_workout_plan": "Създай тренировъчен план",
             "addWorkout": "Добави тренировка",
             "noWorkouts": "Все още не сте добавили тренировки",
             "planNameLabel": "Име на тренировъчният план"

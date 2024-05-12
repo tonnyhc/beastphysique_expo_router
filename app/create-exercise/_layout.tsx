@@ -1,9 +1,9 @@
 import StackHeader from "@/components/common/StackHeader";
 import { CreateExerciseProvider } from "@/contexts/CreateExerciseContext";
-import { useCreateWorkoutContext } from "@/contexts/CreateWorkoutContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import CloseIcon from "@/icons/CloseIcon";
 import { Stack, useGlobalSearchParams } from "expo-router";
+import { t } from "i18next";
 
 const CreateExerciseLayout = () => {
   const { callback } = useGlobalSearchParams();
@@ -19,7 +19,7 @@ const CreateExerciseLayout = () => {
           options={{
             header: () => (
               <StackHeader
-                headerTitle="Create exercise"
+                headerTitle={t('screens.create_exercise.create_exercise')}
                 headerLeft={<CloseIcon size={24} color={colors.primaryText} />}
               />
             ),
@@ -33,7 +33,7 @@ const CreateExerciseLayout = () => {
           options={{
             header: () => (
               <StackHeader
-                headerTitle="Publish exercise"
+                headerTitle={t('screens.create_exercise.publish_exercise')}
                 headerLeft={<CloseIcon size={24} color={colors.primaryText} />}
               />
             ),

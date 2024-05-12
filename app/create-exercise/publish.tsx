@@ -27,6 +27,7 @@ import useExerciseService from "@/hooks/service/useExerciseService";
 import { Exercise } from "@/types/fitnessTypes";
 import { useCreateWorkoutContext } from "@/contexts/CreateWorkoutContext";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 
 const CreateExercisePublishScreen: React.FC = () => {
   const { callback } = useLocalSearchParams();
@@ -140,7 +141,7 @@ const CreateExercisePublishScreen: React.FC = () => {
           <View style={{ flex: 1 }}>
             {/* Video */}
             <View style={styles.formRow}>
-              <Text style={styles.labelText}>Video tutorial</Text>
+              <Text style={styles.labelText}>{t('screens.create_exercise.video_tutorial')}</Text>
               <View style={{ justifyContent: "flex-start" }}>
                 {exerciseData.video_tutorial ? (
                   <TouchableOpacity
@@ -168,22 +169,22 @@ const CreateExercisePublishScreen: React.FC = () => {
             </View>
             {/* Description */}
             <View style={[styles.formRow, { gap: 10 }]}>
-              <Text style={styles.labelText}>Information</Text>
+              <Text style={styles.labelText}>{t('screens.create_exercise.information')}</Text>
               <Input
                 multiline={true}
                 onChange={(value: string) =>
                   changeFieldValue(value, "information")
                 }
-                placeholder="Write a descriptive information "
+                placeholder={t('screens.create_exercise.information_placeholder')}
                 value={exerciseData.information}
               />
             </View>
 
             <View style={[styles.formRow, { gap: 10 }]}>
-              <Text style={styles.labelText}>Tips & Tricks</Text>
+              <Text style={styles.labelText}>{t('screens.create_exercise.tips')}</Text>
               <Input
                 multiline={true}
-                placeholder="Be carefull with ..."
+                placeholder={t('screens.create_exercise.tips_placeholder')}
                 value={exerciseData.tips}
                 onChange={(value: string) => changeFieldValue(value, "tips")}
               />
@@ -193,7 +194,7 @@ const CreateExercisePublishScreen: React.FC = () => {
           <View style={{ marginTop: 20, gap: 10 }}>
             <Button
               type="primary"
-              text="Create"
+              text={t('common.create')}
               loading={pendingMutate}
               disabled={isCreateDisabled}
               onPress={mutate}
@@ -201,7 +202,7 @@ const CreateExercisePublishScreen: React.FC = () => {
             <Button
               type="outlined"
               disabled={isPublishDisabled}
-              text="Create & Publish"
+              text={t('screens.create_exercise.create_and_publish')}
               onPress={() => createPublicExercise()}
             />
           </View>

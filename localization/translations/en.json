@@ -17,7 +17,8 @@
         "weakPassword": "Weak password",
         "passwordsNotMatch": "Passwords don't match!",
         "passwordHelperText": "Your password must be at least 9 characters and should include a combination of numbers, letters and special characters (!$@%).",
-        "create": "Create"
+        "create": "Create",
+        "select": "Select"
     },
     "workout": {
         "workoutPlans": "Workout plans"
@@ -112,12 +113,26 @@
         "profile": {
             "edit_profile": "Edit profile"
         },
+        "create_exercise": {
+            "create_exercise": "Create exercise",
+            "name": "Name",
+            "targeted_muscle_groups": "Targeted muscle groups",
+            "can_be_bw": "Can be performed bodyweight",
+            "publish_exercise": "Publish exercise",
+            "video_tutorial": "Video tutorial",
+            "information": "Information",
+            "tips": "Tips & Tricks",
+            "information_placeholder": "Write a descriptive information",
+            "tips_placeholder": "Be carefull with ...",
+            "create_and_publish": "Create & Publish"
+        },
         "create_workout": {
             "title": "Create workout",
             "addExercises": "Add exercises",
             "workoutNameLabel": "Workout name"
         },
         "create_workout_plan": {
+            "create_workout_plan": "Create workout plan",
             "addWorkout": "Add workout",
             "noWorkouts": "No workouts added yet!",
             "planNameLabel": "Workout plan name"

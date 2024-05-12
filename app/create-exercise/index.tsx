@@ -20,6 +20,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox/build/dist/BouncyCheckb
 import Button from "@/components/common/Button";
 import ChevronRight from "@/icons/ChevronRight";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 
 const CreateExerciseBaseScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -85,17 +86,17 @@ const CreateExerciseBaseScreen: React.FC = () => {
           {/* exercise name */}
           <View style={styles.formRow}>
             <Input
-              label="Name"
+              label={t('common.name')}
               labelStyles={styles.labelText}
               value={exerciseData.name}
               onChange={(value: string) => changeFieldValue(value, "name")}
-              placeholder="Custom exercise"
+              placeholder="Dumbbell ..."
             />
           </View>
 
           {/* Targeted muscle groups */}
           <View style={styles.formRow}>
-            <Text style={styles.labelText}>Targeted muscle groups</Text>
+            <Text style={styles.labelText}>{t('screens.create_exercise.targeted_muscle_groups')}</Text>
             <View style={styles.muscleGroupsWrapper}>
               {exerciseData.targeted_muscle_groups.map((item, index) => (
                 <SelectMuscleGroupChip
@@ -117,7 +118,7 @@ const CreateExerciseBaseScreen: React.FC = () => {
           {/* bodyweight checkbox */}
           <View style={styles.formRow}>
             <View style={styles.bodyweightWrapper}>
-              <Text style={styles.labelText}>Can be performed bodyweight</Text>
+              <Text style={styles.labelText}>{t('screens.create_exercise.can_be_bw')}</Text>
               <BouncyCheckbox
                 ref={checkboxRef}
                 size={26}
@@ -133,7 +134,7 @@ const CreateExerciseBaseScreen: React.FC = () => {
 
         <View>
           <Button
-            text="Continue"
+            text={t('common.continue')}
             disabled={
               emptyValues || exerciseData.targeted_muscle_groups.length == 0
             }
