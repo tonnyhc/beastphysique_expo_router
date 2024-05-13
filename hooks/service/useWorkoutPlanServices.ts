@@ -4,7 +4,7 @@ import { Workout, WorkoutPlan } from "@/types/fitnessTypes";
 
 const useWorkoutPlanServices = () => {
   const { token } = useAuth();
-  const { post, get } = useApi(token);
+  const { post, get, del } = useApi(token);
 
   const createWorkoutPlan = async (body: Record<string, any>): Promise<any> => {
     try {
@@ -29,7 +29,12 @@ const useWorkoutPlanServices = () => {
     return await get(url);
   };
 
-  return { createWorkoutPlan, getWorkoutPlansByUser, getWorkoutPlanById };
+  const deleteWorkoutPlan = async(id:number):Promise<null> => {
+    const url = 'workouts/workout-plan/delete/' + id + '/';
+    return await del(url)
+  }
+
+  return { createWorkoutPlan, getWorkoutPlansByUser, getWorkoutPlanById, deleteWorkoutPlan };
 };
 
 export default useWorkoutPlanServices;
