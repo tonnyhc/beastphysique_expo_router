@@ -4,6 +4,7 @@ import StackHeader from "@/components/common/StackHeader";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import LogoIcon from "@/icons/LogoIcon";
+import MoreDotsIcon from "@/icons/MoreDotsIcon";
 import { Link, Stack, router } from "expo-router";
 import { t } from "i18next";
 import { View, Text } from "react-native";
@@ -22,7 +23,7 @@ const WorkoutsLayout: React.FC = () => {
               headerRight={
                 <View style={{ alignSelf: "flex-end" }}>
                   <Button
-                    text={t('common.create')}
+                    text={t("common.create")}
                     type="text"
                     onPress={() => router.replace("/create-workout-plan/")}
                   />
@@ -33,17 +34,15 @@ const WorkoutsLayout: React.FC = () => {
         }}
         name="index"
       />
-      <Stack.Screen name='workout' options={{
-        headerShown: false
-      }}/>
+      <Stack.Screen
+        name="workout"
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         options={{
-          header: () => (
-            <StackHeader
-              headerLeft={<BackButton onPress={() => router.back()} />}
-              headerTitle="Workout Plan"
-            />
-          ),
+          headerShown: false,
         }}
         name="workout-plan"
       />

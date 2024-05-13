@@ -34,7 +34,7 @@ const StackHeader: React.FC<StackHeaderProps> = ({
       fontFamily: "RobotoMedium",
       color: colors.primaryText,
       textAlign: "center",
-      flex: 1,
+      flex: 1.5,
     },
   });
 

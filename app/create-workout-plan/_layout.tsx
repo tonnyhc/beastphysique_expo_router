@@ -73,7 +73,7 @@ const CreateWorkoutPlanLayout: React.FC = () => {
                     onPress={() => closeCreateWorkoutPlanLayout()}
                   />
                 }
-                headerTitle="Create workout plan"
+                headerTitle={t('screens.create_workout_plan.create_workout_plan')}
                 headerRight={
                   <Button
                     disabled={!isWorkoutPlanValid}

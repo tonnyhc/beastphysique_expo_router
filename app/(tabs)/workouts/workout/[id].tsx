@@ -15,6 +15,7 @@ import StackHeader from "@/components/common/StackHeader";
 import BackButton from "@/components/common/BackButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
+import MoreDotsIcon from "@/icons/MoreDotsIcon";
 
 const WorkoutDetails: React.FC = () => {
   const { workoutSessionDetails } = useWorkoutService();
@@ -59,6 +60,7 @@ const WorkoutDetails: React.FC = () => {
             headerStyles={{
               paddingLeft: 0,
               paddingRight: 0,
+              marginBottom: 20,
             }}
             headerLeft={<BackButton onPress={() => router.back()} />}
             headerTitle={workoutData.name}
@@ -66,7 +68,7 @@ const WorkoutDetails: React.FC = () => {
           {/* <ScrollView style={styles.exercisesWrapper}> */}
           {workoutData.exercises.map((exercise, index) => (
             <WorkoutDetailsExerciseCard
-              key={exercise.id}
+              key={exercise.id }
               index={index}
               session={exercise}
             />

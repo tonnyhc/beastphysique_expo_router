@@ -74,7 +74,7 @@ const WorkoutPlanDetailsWorkoutCard: React.FC<
         <View style={styles.exercisesWrapper}>
           {/* ExerciseCard */}
           {workout.exercises.map((exercise, index) => (
-            <View key={exercise.id}>
+            <View key={exercise.id + '-' + index}>
               <Text style={styles.exerciseName}>
                 <Text>{index + 1}. </Text>
                 <Text>{exercise.name}</Text>

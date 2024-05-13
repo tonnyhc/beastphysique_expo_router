@@ -14,6 +14,7 @@ import SearchIcon from "@/icons/SearchIcon";
 import Button from "@/components/common/Button";
 import { router } from "expo-router";
 import ExerciseSearchMuscleGroup from "@/components/exercise/ExerciseSearchMuscleGroup";
+import { t } from "i18next";
 
 const ExerciseSearch: React.FC = ({}) => {
   const { colors } = useTheme();
@@ -87,7 +88,7 @@ const ExerciseSearch: React.FC = ({}) => {
             addExercise(selectedExercises);
             router.back();
           }}
-          text={`Select ${selectedExercises.length}`}
+          text={`${t('common.select')} ${selectedExercises.length}`}
         />
       </View>
     </Screen>

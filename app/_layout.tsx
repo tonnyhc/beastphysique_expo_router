@@ -11,9 +11,12 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
+import { Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
 import CreateWorkoutPlanProvider from "@/contexts/CreateWorkoutPlanContext";
+import { UtilityProvider } from "@/contexts/UtilityContext";
+import ToastMessage from "@/components/common/ToastMessage";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -69,24 +72,27 @@ function RootLayoutNav() {
     <QueryClientProvider client={queryClient}>
       <StatusBar />
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <AuthProvider>
-          <ThemeProvider>
-            <CreateWorkoutPlanProvider>
-              <Stack
-                screenOptions={{ headerShown: false }}
-                initialRouteName="(tabs)"
-              >
-                <Stack.Screen name="(tabs)" />
-                <Stack.Screen name="(auth)" />
-                <Stack.Screen name="account" />
-                <Stack.Screen name="profile-setup" />
-                <Stack.Screen name="create-exercise" />
-                <Stack.Screen name="create-workout" />
-                <Stack.Screen name="create-workout-plan" />
-              </Stack>
-            </CreateWorkoutPlanProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <UtilityProvider>
+          <AuthProvider>
+            <ThemeProvider>
+              {/* <ToastMessage /> */}
+              <CreateWorkoutPlanProvider>
+                <Stack
+                  screenOptions={{ headerShown: false }}
+                  initialRouteName="(tabs)"
+                >
+                  <Stack.Screen name="(tabs)" />
+                  <Stack.Screen name="(auth)" />
+                  <Stack.Screen name="account" />
+                  <Stack.Screen name="profile-setup" />
+                  <Stack.Screen name="create-exercise" />
+                  <Stack.Screen name="create-workout" />
+                  <Stack.Screen name="create-workout-plan" />
+                </Stack>
+              </CreateWorkoutPlanProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </UtilityProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

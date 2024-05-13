@@ -3,14 +3,13 @@ import Button from "@/components/common/Button";
 import StackHeader from "@/components/common/StackHeader";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
 import { useCreateWorkoutPlanContext } from "@/contexts/CreateWorkoutPlanContext";
-import { useTheme } from "@/contexts/ThemeContext";
 import { Stack, router, useGlobalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 const CreateWorkoutLayout = () => {
   const { t } = useTranslation();
   const params = useGlobalSearchParams();
-  const { callback, makeRequest, workoutToEditIndex } = params;
+  const { makeRequest, workoutToEditIndex } = params;
   const { addWorkout } = useCreateWorkoutPlanContext();
 
   return (
