@@ -187,9 +187,10 @@ const ExerciseSessionSetCreationCard: React.FC<
                 width: 80,
               }}
               placeholder=""
-              onChange={(value: string) =>
-                editSetProperty(exerciseIndex, setIndex, "weight", value)
-              }
+              onChange={(value: string) => {
+                value = value.replace(",", ".");
+                editSetProperty(exerciseIndex, setIndex, "weight", value);
+              }}
               value={set.weight.toString()}
             />
           ) : (

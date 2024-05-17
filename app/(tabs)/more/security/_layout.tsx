@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const SecurityLayout: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <Stack initialRouteName="index">
+    <Stack>
       <Stack.Screen
         options={{
           header: () => (

@@ -37,19 +37,19 @@ const generateCategories = (
       categoryName: t("screens.more.health_fitness"),
       properties: [
         // Exercises
-        {
-          title: t("screens.more.exercises"),
-          icon: <DumbbellIcon size={24} color={colors.primaryText} />,
-          action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/more"),
-        },
-        // Workouts
-        {
-          title: t("screens.more.workouts"),
-          icon: <DumbbellIcon size={24} color={colors.primaryText} />,
-          action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => router.replace("/(tabs)/"),
-        },
+        // {
+        //   title: t("screens.more.exercises"),
+        //   icon: <DumbbellIcon size={24} color={colors.primaryText} />,
+        //   action: <ChevronRight size={24} color={colors.primaryText} />,
+        //   navigate: () => router.replace("/(tabs)/more"),
+        // },
+        // // Workouts
+        // {
+        //   title: t("screens.more.workouts"),
+        //   icon: <DumbbellIcon size={24} color={colors.primaryText} />,
+        //   action: <ChevronRight size={24} color={colors.primaryText} />,
+        //   navigate: () => router.replace("/(tabs)/"),
+        // },
         // Weight
         {
           title: t("screens.more.weight"),
@@ -79,12 +79,12 @@ const generateCategories = (
         },
 
         // Notifications
-        {
-          title: t("screens.more.notifications"),
-          icon: <NotificationIcon size={24} color={colors.primaryText} />,
-          action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => {},
-        },
+        // {
+        //   title: t("screens.more.notifications"),
+        //   icon: <NotificationIcon size={24} color={colors.primaryText} />,
+        //   action: <ChevronRight size={24} color={colors.primaryText} />,
+        //   navigate: () => {},
+        // },
         // Language
         {
           title: t("screens.more.language"),
@@ -114,25 +114,25 @@ const generateCategories = (
       ],
     },
     // Support
-    {
-      categoryName: t("screens.more.support"),
-      properties: [
-        // Help center
-        {
-          title: t("screens.more.helpCenter"),
-          icon: <NotificationIcon size={24} color={colors.primaryText} />,
-          action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => {},
-        },
-        // Report a bug
-        {
-          title: t("screens.more.reportBug"),
-          icon: <FlagIcon size={24} color={colors.primaryText} />,
-          action: <ChevronRight size={24} color={colors.primaryText} />,
-          navigate: () => {},
-        },
-      ],
-    },
+    // {
+    //   categoryName: t("screens.more.support"),
+    //   properties: [
+    //     // Help center
+    //     {
+    //       title: t("screens.more.helpCenter"),
+    //       icon: <NotificationIcon size={24} color={colors.primaryText} />,
+    //       action: <ChevronRight size={24} color={colors.primaryText} />,
+    //       navigate: () => {},
+    //     },
+    //     // Report a bug
+    //     {
+    //       title: t("screens.more.reportBug"),
+    //       icon: <FlagIcon size={24} color={colors.primaryText} />,
+    //       action: <ChevronRight size={24} color={colors.primaryText} />,
+    //       navigate: () => {},
+    //     },
+    //   ],
+    // },
   ];
 
   return categories;

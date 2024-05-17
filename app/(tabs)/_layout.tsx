@@ -11,7 +11,6 @@ import UserIcon from "@/icons/UserIcon";
 import MoreIcon from "@/icons/MoreIcon";
 import { useTheme } from "@/contexts/ThemeContext";
 
-
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { colors } = useTheme();
@@ -57,19 +56,6 @@ export default function TabLayout() {
           title: "Workouts",
           tabBarIcon: ({ focused, color, size }) => (
             <DumbbellIcon
-              size={size}
-              color={color}
-              fill={focused ? color : "none"}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ focused, color, size }) => (
-            <UserIcon
               size={size}
               color={color}
               fill={focused ? color : "none"}

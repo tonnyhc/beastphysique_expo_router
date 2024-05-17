@@ -23,12 +23,12 @@ const BaseSecuritySettingsScreen: React.FC = () => {
       action: <ChevronRight size={24} color={colors.primaryText} />,
       navigate: () => router.push('/(tabs)/more/security/password'),
     },
-    {
-      title: t("common.email"),
-      icon: <EmailIcon size={24} color={colors.primaryText} />,
-      action: <ChevronRight size={24} color={colors.primaryText} />,
-      navigate: () => navigation.navigate("ChangePassword"),
-    },
+    // {
+    //   title: t("common.email"),
+    //   icon: <EmailIcon size={24} color={colors.primaryText} />,
+    //   action: <ChevronRight size={24} color={colors.primaryText} />,
+    //   navigate: () => navigation.navigate("ChangePassword"),
+    // },
   ];
   return (
     <Screen>

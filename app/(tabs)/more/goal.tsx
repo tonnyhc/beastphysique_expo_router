@@ -7,7 +7,7 @@ import useApi from "@/hooks/service/useApi";
 import { router } from "expo-router";
 import Screen from "@/components/common/Screen";
 import Button from "@/components/common/Button";
-import { generatePhysiqueGoals } from "@/utils/mapData";
+import { generateFitnessGoals } from "@/utils/mapData";
 import FitnessGoalCard from "@/components/fitnessGoal/FitnessGoalCard";
 import useProfileSetup from "@/hooks/service/useProfileSetup";
 
@@ -17,7 +17,7 @@ const GoalSettings: React.FC = () => {
   const { token } = useAuth();
   const { get } = useApi(token as string);
 
-  const physiqueGoals = generatePhysiqueGoals(t);
+  const physiqueGoals = generateFitnessGoals(t);
 
   const fetchGoal = async () => {
     const data = await get("health/fitness/details/goal/");

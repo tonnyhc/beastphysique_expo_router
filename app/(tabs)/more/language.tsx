@@ -79,10 +79,16 @@ const LanguageSettings: React.FC = () => {
         </Text>
       </View>
       <View style={{ paddingTop: 10, gap: 10 }}>
-        <Text style={styles.availableLang}>{t('screens.change_language.available_languages')}</Text>
+        <Text style={styles.availableLang}>
+          {t("screens.change_language.available_languages")}
+        </Text>
         {/* language card */}
-        {languageCard.map((lang) => (
-          <TouchableOpacity onPress={() => i18n.changeLanguage(lang.value)} style={styles.langCard}>
+        {languageCard.map((lang, index) => (
+          <TouchableOpacity
+            key={lang.language + "-" + index}
+            onPress={() => i18n.changeLanguage(lang.value)}
+            style={styles.langCard}
+          >
             <View style={{ gap: 8 }}>
               <Text style={styles.langHeader}>{lang.language}</Text>
               <Text style={styles.langSubheader}>{lang.translation}</Text>
@@ -93,9 +99,11 @@ const LanguageSettings: React.FC = () => {
           </TouchableOpacity>
         ))}
         <View style={{ gap: 12, marginTop: 18 }}>
-          <Text style={styles.cantFindLang}>{t('screens.change_language.cant_find_language')}</Text>
+          <Text style={styles.cantFindLang}>
+            {t("screens.change_language.cant_find_language")}
+          </Text>
           <Text style={styles.langSubheader}>
-           {t('screens.change_language.cant_find_language_helper')}
+            {t("screens.change_language.cant_find_language_helper")}
           </Text>
         </View>
       </View>
