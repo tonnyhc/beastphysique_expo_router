@@ -14,6 +14,7 @@ import WorkoutDetailsExerciseCardHeader from "./WorkoutDetailsExerciseCardHeader
 import InfoIcon from "@/icons/InfoIcon";
 import WorkoutDetailsExerciseButtons from "./WorkoutDetailsExerciseButtons";
 import WorkoutDetailsExpandedExerciseCard from "./WorkoutDetailsExpandedExerciseCard";
+import EditExerciseSessionModal from "./EditExerciseSessionModal";
 
 interface WorkoutDetailsExerciseCardProp {
   session: ExerciseSession;
@@ -27,8 +28,7 @@ const WorkoutDetailsExerciseCard: React.FC<WorkoutDetailsExerciseCardProp> = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const { colors } = useTheme();
   const [clickedSet, setClickedSet] = useState<ExerciseSet | null>(null);
-
-  //   const { data } = useFetchExerciseSessionProgress(session.id);
+  const [editModal, setEditModal] = useState<boolean>(false)
 
   const cardClickHandler = () => {
     setIsExpanded((oldExpanded) => !oldExpanded);
@@ -52,25 +52,30 @@ const WorkoutDetailsExerciseCard: React.FC<WorkoutDetailsExerciseCardProp> = ({
     },
   });
   return (
-    <View style={styles.card}>
-      <WorkoutDetailsExerciseCardHeader
-        isExpanded={isExpanded}
-        exerciseName={session.exercise.name}
-        index={index}
-        setsCount={session.sets.length}
-        cardClickHandler={cardClickHandler}
-      />
-
-      {isExpanded ? (
-        <WorkoutDetailsExpandedExerciseCard
-          handleSetClick={handleSetClick}
+    <>
+      <EditExerciseSessionModal closeModal={() => setEditModal(false)} visible={editModal} session={session} />
+      <View style={styles.card}>
+        <WorkoutDetailsExerciseCardHeader
           isExpanded={isExpanded}
-          exerciseTips={session.exercise.tips}
-          clickedSet={clickedSet}
-          sets={session.sets}
+          exerciseName={session.exercise.name}
+          index={index}
+          setsCount={session.sets.length}
+          cardClickHandler={cardClickHandler}
         />
-      ) : null}
-    </View>
+
+        {isExpanded ? (
+          <WorkoutDetailsExpandedExerciseCard
+        onModify={() => setEditModal(true)}
+
+            handleSetClick={handleSetClick}
+            isExpanded={isExpanded}
+            exerciseTips={session.exercise.tips}
+            clickedSet={clickedSet}
+            sets={session.sets}
+          />
+        ) : null}
+      </View>
+    </>
   );
 };
 

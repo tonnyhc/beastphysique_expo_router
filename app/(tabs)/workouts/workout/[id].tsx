@@ -5,7 +5,7 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import useWorkoutService from "@/hooks/service/useWorkoutService";
 import useRefreshControl from "@/hooks/useRefreshControl";
 import { WorkoutSession } from "@/types/fitnessTypes";
@@ -16,15 +16,17 @@ import BackButton from "@/components/common/BackButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import MoreDotsIcon from "@/icons/MoreDotsIcon";
+import EditExerciseSessionModal from "@/components/workout/EditExerciseSessionModal";
 
 const WorkoutDetails: React.FC = () => {
   const { workoutSessionDetails } = useWorkoutService();
   const { id } = useLocalSearchParams();
-  // const workoutId = route.params.workoutSessionId;
   const { colors } = useTheme();
+
   const { data, refetch, isLoading, isError } = workoutSessionDetails(
     id as unknown as number
   );
+
   const { onRefresh, refreshing } = useRefreshControl({
     isLoading,
     refreshFn: refetch,
@@ -44,39 +46,41 @@ const WorkoutDetails: React.FC = () => {
     },
   });
   return (
-    <Screen
-      styles={{
-        paddingTop: 0,
-      }}
-    >
-      <View style={styles.wrapper}>
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          refreshControl={
-            <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-        >
-          <StackHeader
-            headerStyles={{
-              paddingLeft: 0,
-              paddingRight: 0,
-              marginBottom: 20,
-            }}
-            headerLeft={<BackButton onPress={() => router.back()} />}
-            headerTitle={workoutData.name}
-          />
-          {/* <ScrollView style={styles.exercisesWrapper}> */}
-          {workoutData.exercises.map((exercise, index) => (
-            <WorkoutDetailsExerciseCard
-              key={exercise.id }
-              index={index}
-              session={exercise}
+    <>
+      <Screen
+        styles={{
+          paddingTop: 0,
+        }}
+      >
+        <View style={styles.wrapper}>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            refreshControl={
+              <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+            }
+          >
+            <StackHeader
+              headerStyles={{
+                paddingLeft: 0,
+                paddingRight: 0,
+                marginBottom: 20,
+              }}
+              headerLeft={<BackButton onPress={() => router.back()} />}
+              headerTitle={workoutData.name}
             />
-          ))}
-          {/* </ScrollView> */}
-        </ScrollView>
-      </View>
-    </Screen>
+            {/* <ScrollView style={styles.exercisesWrapper}> */}
+            {workoutData.exercises.map((exercise, index) => (
+              <WorkoutDetailsExerciseCard
+                key={exercise.id}
+                index={index}
+                session={exercise}
+              />
+            ))}
+            {/* </ScrollView> */}
+          </ScrollView>
+        </View>
+      </Screen>
+    </>
   );
 };
 

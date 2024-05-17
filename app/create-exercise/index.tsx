@@ -90,7 +90,7 @@ const CreateExerciseBaseScreen: React.FC = () => {
               labelStyles={styles.labelText}
               value={exerciseData.name}
               onChange={(value: string) => changeFieldValue(value, "name")}
-              placeholder="Dumbbell ..."
+              placeholder="Exercise name"
             />
           </View>
 

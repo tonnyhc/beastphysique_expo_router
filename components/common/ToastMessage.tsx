@@ -24,7 +24,7 @@ const ToastMessage: React.FC<ToastMessageProps> = ({
   };
 
   return (
-    <View style={{ zIndex: 999 }}>
+    <View style={{ zIndex: 999999 }}>
       <Toast type={type} config={toastConfig} position="top" topOffset={80} />
     </View>
   );

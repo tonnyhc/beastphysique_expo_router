@@ -4,24 +4,28 @@ import React from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateWorkoutContext } from "@/contexts/CreateWorkoutContext";
 import Input from "../common/Input";
-
+import { ExerciseSet } from "@/types/fitnessTypes";
 
 interface ExerciseSessionRepRangeModalProps {
   visible: boolean;
   closeModal: () => void;
-
   setIndex: number;
   exerciseIndex: number;
+  //
+  set: ExerciseSet;
+  editSetProperty: (
+    exerciseIndex: number,
+    setIndex: number,
+    propertyName: string,
+    value: any
+  ) => void;
 }
 
 const ExerciseSessionRepRangeModal: React.FC<
   ExerciseSessionRepRangeModalProps
-> = ({ visible, closeModal, exerciseIndex, setIndex }) => {
+> = ({ visible, closeModal, exerciseIndex, setIndex, set, editSetProperty }) => {
   const { colors } = useTheme();
 
-  const { workout, editSetProperty } = useCreateWorkoutContext();
-  const currentExercise = workout.exercises[exerciseIndex];
-  const currentSet = currentExercise.sets[setIndex];
 
   const styles = StyleSheet.create({
     modal: {
@@ -31,8 +35,8 @@ const ExerciseSessionRepRangeModal: React.FC<
       padding: 25,
       borderRadius: 20,
       backgroundColor: colors.bg,
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: "center",
+      alignItems: "center",
     },
     formWrapper: {
       gap: 10,
@@ -41,11 +45,11 @@ const ExerciseSessionRepRangeModal: React.FC<
       alignItems: "center",
     },
     title: {
-        fontSize: 22,
-        color: colors.primaryText,
-        fontFamily: "RobotoMedium",
-        marginBottom: 18
-    }
+      fontSize: 22,
+      color: colors.primaryText,
+      fontFamily: "RobotoMedium",
+      marginBottom: 18,
+    },
   });
 
   return (
@@ -65,7 +69,7 @@ const ExerciseSessionRepRangeModal: React.FC<
             <Input
               label="Min Reps"
               inputMode="numeric"
-              value={currentSet?.min_reps.toString()}
+              value={set?.min_reps.toString()}
               onChange={(value: string) =>
                 editSetProperty(
                   exerciseIndex,
@@ -91,7 +95,7 @@ const ExerciseSessionRepRangeModal: React.FC<
           <View>
             <Input
               label="Max Reps"
-              value={currentSet?.max_reps.toString()}
+              value={set?.max_reps.toString()}
               inputMode="numeric"
               onChange={(value: string) =>
                 editSetProperty(

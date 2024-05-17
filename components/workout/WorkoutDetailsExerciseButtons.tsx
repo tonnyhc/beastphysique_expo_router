@@ -4,8 +4,15 @@ import TimelineIcon from "@/icons/TimelineIcon";
 import GearIcon from "@/icons/GearIcon";
 import InfoIcon from "@/icons/InfoIcon";
 import { useTheme } from "@/contexts/ThemeContext";
+import { router } from "expo-router";
 
-const WorkoutDetailsExerciseButtons = () => {
+interface WorkoutDetailsExerciseButtonsProps {
+  onModify: () => void;
+}
+
+const WorkoutDetailsExerciseButtons: React.FC<
+  WorkoutDetailsExerciseButtonsProps
+> = ({ onModify }) => {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
     buttonsWrapper: {
@@ -32,11 +39,8 @@ const WorkoutDetailsExerciseButtons = () => {
         <Text style={styles.buttonText}>Progress</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() =>
-        //   navigation.navigate("EditExerciseSession", {
-        //     exerciseSession: session,
-        //   })
-        // }
+
+        onPress={() => onModify()}
         style={styles.button}
       >
         <GearIcon size={22} color={colors.button} />

@@ -16,11 +16,19 @@ interface WorkoutDetailsExpandedExerciseCardProps {
   sets: ExerciseSet[];
   clickedSet: ExerciseSet | null;
   handleSetClick: (set: ExerciseSet) => void;
+  onModify: () => void;
 }
 
 const WorkoutDetailsExpandedExerciseCard: React.FC<
   WorkoutDetailsExpandedExerciseCardProps
-> = ({ isExpanded, exerciseTips, sets, clickedSet, handleSetClick }) => {
+> = ({
+  isExpanded,
+  exerciseTips,
+  sets,
+  clickedSet,
+  handleSetClick,
+  onModify,
+}) => {
   const { colors } = useTheme();
   const scaleYAnim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -124,7 +132,7 @@ const WorkoutDetailsExpandedExerciseCard: React.FC<
     <Animated.View style={[styles.cardContent, styles.animatedCardContent]}>
       {/* Header */}
       <View style={styles.header}>
-        <WorkoutDetailsExerciseButtons />
+        <WorkoutDetailsExerciseButtons onModify={onModify}/>
 
         <View style={styles.separator} />
         <View style={styles.setsCount}>

@@ -14,12 +14,11 @@ import { Swipeable } from "react-native-gesture-handler";
 import ExerciseSessionMoreModal from "./ExerciseSessionMoreModal";
 import ExerciseSessionRepRangeModal from "./ExerciseSessionRepRangeModal";
 import ExerciseSessionNotesModal from "./ExerciseSessionNotesModal";
-import Input from "../common/Input";
+
 import Button from "../common/Button";
-import MoreDotsIcon from "@/icons/MoreDotsIcon";
-import CopyIcon from "@/icons/CopyIcon";
-import { dir } from "i18next";
+
 import * as Haptics from "expo-haptics";
+import ExerciseSessionSetCreationCard from "./ExerciseSessionSetCreationCard";
 
 interface ExerciseSessionCreationCardProps {
   exercise: ExerciseSession;
@@ -31,6 +30,7 @@ const ExerciseSessionCreationCard: React.FC<
 > = ({ exerciseIndex, exercise }) => {
   const { colors } = useTheme();
   const {
+    workout,
     addSetToExercise,
     deleteSetFromExercise,
     editSetProperty,
@@ -60,61 +60,6 @@ const ExerciseSessionCreationCard: React.FC<
           style: "cancel",
         },
       ]
-    );
-  };
-
-  const renderRightSetActions = (setIndex: number, setId: number) => {
-    return (
-      <TouchableOpacity
-        style={{ height: "100%", justifyContent: "flex-start" }}
-        onPress={() => deleteSetFromExercise(exerciseIndex, setIndex, setId)}
-      >
-        <Animated.View
-          style={{
-            backgroundColor: colors.error,
-            justifyContent: "center",
-            height: "100%",
-            alignItems: "center",
-            marginBottom: 16,
-            paddingHorizontal: 48,
-            marginLeft: 24,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "RobotoRegular",
-              color: colors.white,
-              textAlign: "center",
-            }}
-          >
-            Delete
-          </Text>
-        </Animated.View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderLeftSetActions = (setIndex: number, setId: number) => {
-    return (
-      <TouchableOpacity
-        style={{ height: "100%" }}
-        onPress={() => duplicateExerciseSet(exerciseIndex, setIndex)}
-      >
-        <Animated.View
-          style={{
-            backgroundColor: "#F59300",
-            justifyContent: "center",
-            height: "100%",
-            alignItems: "center",
-            marginBottom: 16,
-            paddingHorizontal: 48,
-            marginRight: 48,
-          }}
-        >
-          <CopyIcon size={24} color={colors.primaryText} />
-        </Animated.View>
-      </TouchableOpacity>
     );
   };
 
@@ -181,13 +126,11 @@ const ExerciseSessionCreationCard: React.FC<
       gap: 15,
     },
     exerciseIndex: {
-      // fontSize: 20,
       fontSize: 16,
       fontFamily: "RobotoMedium",
       color: colors.secondaryText,
     },
     exerciseName: {
-      // fontSize: 20,
       fontSize: 16,
       fontFamily: "RobotoMedium",
       color: colors.primaryText,
@@ -195,19 +138,6 @@ const ExerciseSessionCreationCard: React.FC<
     setsWrapper: {
       gap: 20,
       flexGrow: 1,
-    },
-    setCard: {
-      justifyContent: "space-between",
-      flexDirection: "row",
-      backgroundColor: colors.bg,
-    },
-    setProperty: {
-      gap: 10,
-    },
-    proprtyText: {
-      fontFamily: "RobotoMedium",
-      color: colors.secondaryText,
-      alignSelf: "center",
     },
   });
 
@@ -218,9 +148,15 @@ const ExerciseSessionCreationCard: React.FC<
         closeModal={() => closeMoreModal()}
         setIndex={setIndex as number | 0}
         exerciseIndex={exerciseIndex}
-        exercise={exercise}
+        editSetProperty={editSetProperty}
+        deleteSetFromExercise={() =>
+          deleteSetFromExercise(exerciseIndex, setIndex as unknown as number)
+        }
+        set={exercise.sets[setIndex ? setIndex : 0]}
       />
       <ExerciseSessionRepRangeModal
+        set={workout.exercises[exerciseIndex].sets[setIndex ? setIndex : 0]}
+        editSetProperty={editSetProperty}
         exerciseIndex={exerciseIndex}
         setIndex={setIndex as number}
         visible={isRepRangeModalOpen}
@@ -246,145 +182,17 @@ const ExerciseSessionCreationCard: React.FC<
             <Text style={styles.exerciseName}>{exercise.exercise.name}</Text>
           </View>
           <View style={styles.setsWrapper}>
-            {exercise.sets?.map((item, index) => (
-              <Swipeable
-                renderRightActions={() =>
-                  renderRightSetActions(index, item.id as number)
-                }
-                renderLeftActions={() =>
-                  renderLeftSetActions(index, item.id as number)
-                }
-                overshootRight={true}
-                overshootFriction={5}
-                overshootLeft={true}
-                onSwipeableOpen={(direction) =>
-                  direction == "left"
-                    ? duplicateExerciseSet(exerciseIndex, index)
-                    : deleteSetFromExercise(exerciseIndex, index)
-                }
-                friction={1}
-              >
-                <View style={styles.setCard}>
-                  <View style={styles.setProperty}>
-                    <Text style={[styles.proprtyText, { flex: 1 }]}>Set</Text>
-                    <Text style={[styles.proprtyText, { flex: 1 }]}>
-                      {index + 1}
-                    </Text>
-                  </View>
-                  {/* Reps */}
-                  <View style={styles.setProperty}>
-                    <Text style={styles.proprtyText}>Reps</Text>
-                    {item.to_failure.toString() === "false" ? (
-                      <Input
-                        borderStyles={{
-                          paddingLeft: 4,
-                          paddingRight: 4,
-                          justifyContent: "center",
-                        }}
-                        inputMode="numeric"
-                        styles={{
-                          width: 80,
-                        }}
-                        placeholder=""
-                        onChange={(value: string) =>
-                          editSetProperty(exerciseIndex, index, "reps", value)
-                        }
-                        value={item.reps.toString()}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: colors.primaryText,
-                          fontFamily: "RobotoMedium",
-                        }}
-                      >
-                        FAILURE
-                      </Text>
-                    )}
-                  </View>
-                  {/* Weight */}
-                  <View style={styles.setProperty}>
-                    <Text style={styles.proprtyText}>Weight (kg)</Text>
-                    {!item.bodyweight ? (
-                      <Input
-                        borderStyles={{
-                          paddingLeft: 4,
-                          paddingRight: 4,
-                          justifyContent: "center",
-                        }}
-                        inputMode="decimal"
-                        styles={{
-                          minHeight: 48,
-                          width: 80,
-                        }}
-                        placeholder=""
-                        onChange={(value: string) =>
-                          editSetProperty(exerciseIndex, index, "weight", value)
-                        }
-                        value={item.weight.toString()}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: colors.primaryText,
-                          fontFamily: "RobotoMedium",
-                        }}
-                      >
-                        BODYWEIGHT
-                      </Text>
-                    )}
-                  </View>
-                  {/* Min Max Reps */}
-                  <TouchableOpacity
-                    onPress={() => openRepRangeModal(index)}
-                    style={styles.setProperty}
-                  >
-                    <Text
-                      style={[
-                        styles.proprtyText,
-                        { flex: item.to_failure.toString() === "true" ? 0 : 1 },
-                      ]}
-                    >
-                      Rep Range
-                    </Text>
-                    {item.to_failure.toString() === "false" ? (
-                      <>
-                        <Text style={[styles.proprtyText, { flex: 1 }]}>
-                          {item.min_reps.toString() || 0} -{" "}
-                          {item.max_reps.toString() || 99}
-                        </Text>
-                      </>
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: colors.primaryText,
-                          fontFamily: "RobotoMedium",
-                        }}
-                      >
-                        FAILURE
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                  <View
-                    style={[styles.setProperty, { justifyContent: "flex-end" }]}
-                  >
-                    <Button
-                      type="text"
-                      onPress={() => openMoreModal(index)}
-                      rightIcon={
-                        <MoreDotsIcon
-                          fill={colors.secondaryText}
-                          size={24}
-                          color={colors.secondaryText}
-                        />
-                      }
-                    />
-                  </View>
-                </View>
-              </Swipeable>
+            {exercise.sets.map((item, index) => (
+              <ExerciseSessionSetCreationCard
+                set={item}
+                setIndex={index}
+                exerciseIndex={exerciseIndex}
+                editSetProperty={editSetProperty}
+                openRepRangeModal={openRepRangeModal}
+                openMoreModal={openMoreModal}
+                deleteSetFromExercise={deleteSetFromExercise}
+                duplicateExerciseSet={duplicateExerciseSet}
+              />
             ))}
 
             <View>

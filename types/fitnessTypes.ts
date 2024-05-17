@@ -42,7 +42,7 @@ export type ExerciseFromSearch = {
 };
 
 export type ExerciseSession = {
-  id?: number | string;
+  id: number;
   exercise: Exercise;
   sets: ExerciseSet[];
   notes: string;

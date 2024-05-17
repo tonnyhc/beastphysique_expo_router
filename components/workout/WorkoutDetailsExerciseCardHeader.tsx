@@ -8,6 +8,7 @@ interface WorkoutDetailsExerciseCardHeaderProps {
   index: number;
   setsCount: number;
   cardClickHandler: () => void;
+
 }
 
 const WorkoutDetailsExerciseCardHeader: React.FC<

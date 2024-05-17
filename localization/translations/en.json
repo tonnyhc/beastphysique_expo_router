@@ -123,7 +123,7 @@
             "information": "Information",
             "tips": "Tips & Tricks",
             "information_placeholder": "Write a descriptive information",
-            "tips_placeholder": "Be carefull with ...",
+            "tips_placeholder": "Give some good tips for executing the exercise",
             "create_and_publish": "Create & Publish"
         },
         "create_workout": {
