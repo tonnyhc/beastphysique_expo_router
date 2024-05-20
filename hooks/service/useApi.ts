@@ -5,6 +5,7 @@ interface RequestInitWithBody extends RequestInit {
 export type RequestMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 const hostUrl = "http://192.168.100.6:8000/";
+// const hostUrl = 'http://beast-physique.com/'
 
 const useApi = (token: string | null) => {
   const requester = async (

@@ -47,7 +47,7 @@ const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({ plan }) => {
   return (
     <TouchableOpacity
       onPress={
-        () => router.push(`/(tabs)/workouts/workout-plan/${plan.id}`)
+        () => router.push(`/workout-plan/${plan.id}`)
         // navigation.navigate("WorkoutPlanDetails", { planId: plan.id })
       }
       style={styles.cardWrapper}

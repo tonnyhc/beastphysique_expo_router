@@ -1,13 +1,9 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Tabs } from "expo-router";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import DumbbellIcon from "@/icons/DumbbellIcon";
 import HomeIcon from "@/icons/HomeIcon";
-import UserIcon from "@/icons/UserIcon";
 import MoreIcon from "@/icons/MoreIcon";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -17,7 +13,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="index"
+      initialRouteName="workouts"
       screenOptions={{
         tabBarActiveTintColor: colors.primaryText,
         tabBarStyle: {
@@ -40,19 +36,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
-          tabBarIcon: ({ focused, color, size }) => (
-            <HomeIcon
-              size={size}
-              color={color}
-              fill={focused ? color : "none"}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="workouts"
-        options={{
           title: "Workouts",
           tabBarIcon: ({ focused, color, size }) => (
             <DumbbellIcon
@@ -63,6 +46,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="more"
         options={{

@@ -103,6 +103,7 @@ const Input: React.FC<InputProps> = ({
     master: {
       gap: 8,
       minHeight: multiline ? 68 : 42,
+      height: 'auto',
       borderWidth: 1,
       borderRadius: 4,
       borderColor: error || emailError ? colors.error : "#676767",

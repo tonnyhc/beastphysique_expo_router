@@ -35,11 +35,14 @@ interface AuthProps {
 
 export const AuthContext = createContext<AuthProps>({});
 
-function useProtectedRoute(token: string | null) {
+function useProtectedRoute(token: string | null, isVerified: boolean) {
   const segments = useSegments();
   const router = useRouter();
   useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
+    if (token && !isVerified) {
+      return router.replace("/(auth)/accountVerification");
+    }
     if (!token && !inAuthGroup) {
       router.replace("/(auth)/onboarding");
     } else if (token && inAuthGroup) {
@@ -57,44 +60,50 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setupProfile: false,
   });
   const { post, get, put } = useApi(authData.token || "");
-  const [verifyToken, setVerifyToken] = useState<boolean>(false);
-  useProtectedRoute(authData.token);
-  useEffect(() => {
-    const loadAuthData = async (): Promise<void> => {
+  useProtectedRoute(authData.token, authData.isVerified);
+
+  const loadAuthData = async (): Promise<void> => {
+    try {
       const dataFromStorage = await SecureStore.getItemAsync("authData");
       if (dataFromStorage) {
-        const data = await JSON.parse(dataFromStorage);
-        if (data) {
-          setAuthData({
-            token: data.token,
-            isVerified: data.is_verified,
-            email: data.email,
-            setupProfile: data.setup_profile,
-          });
-        }
+        const data = JSON.parse(dataFromStorage);
+        setAuthData({
+          token: data.token,
+          isVerified: data.is_verified,
+          email: data.email,
+          setupProfile: data.setup_profile,
+        });
       }
-    };
-    loadAuthData();
-  }, []);
+    } catch (error) {
+      console.error("Failed to load auth data:", error);
+    }
+  };
 
-  useEffect(() => {
-    setVerifyToken(authData.token ? true : false);
-  }, [authData]);
-
-  if (verifyToken) {
-    verifyTokenFn();
-    setVerifyToken(false);
-  }
-  async function verifyTokenFn() {
+  const verifyAuthData = async () => {
     const url = "authentication/verify-token/";
     try {
-      const data = await get(url);
+      const data: LoginResponse = await get(url);
+      setAuthData({
+        token: data.token,
+        setupProfile: false,
+        email: data.email,
+        isVerified: data.is_verified ? data.is_verified : true,
+      });
       return data;
     } catch (e) {
       logout();
-      return;
     }
-  }
+  };
+
+  useEffect(() => {
+    const initializeAuth = async () => {
+      await loadAuthData();
+      if (authData.token) {
+        await verifyAuthData();
+      }
+    };
+    initializeAuth();
+  }, []);
 
   async function login(body: LoginBody): Promise<LoginResponse> {
     const loginURL = "authentication/login/";
@@ -105,7 +114,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         token: data.token,
         isVerified: data.is_verified,
         email: data.email,
-        setupProfile: data.false,
+        setupProfile: false,
       });
       await SecureStore.setItemAsync("authData", JSON.stringify(data));
       return data;
@@ -130,13 +139,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
   async function logout(): Promise<void> {
+    await SecureStore.deleteItemAsync("authData");
+
     setAuthData({
       token: null,
       isVerified: false,
       email: "",
       setupProfile: false,
     });
-    await SecureStore.deleteItemAsync("authData");
   }
   async function confirmAccount(verificationCode: string): Promise<void> {
     const url = "authentication/verify-account/";
@@ -159,21 +169,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw error;
     }
   }
-
-  // function skipSetupProfile() {
-  //   setAuthData((oldData) => ({
-  //     ...oldData,
-  //     setupProfile: false,
-  //   }));
-  // }
-
-  // async function verifyProfile() {
-  //   setAuthData((oldData) => ({
-  //     ...oldData,
-  //     isVerified: true,
-  //   }));
-  //   await SecureStore.setItemAsync("authData", JSON.stringify(authData));
-  // }
 
   async function changePassword(password: string, new_password: string) {
     const data = await put("authentication/change-password/", {

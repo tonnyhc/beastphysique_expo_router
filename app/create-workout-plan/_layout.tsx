@@ -42,7 +42,7 @@ const CreateWorkoutPlanLayout: React.FC = () => {
 
   const closeCreateWorkoutPlanLayout = () => {
     if (!workoutPlan.planName && workoutPlan.workouts.length <= 0) {
-      return router.replace("/(tabs)/workouts");
+      return router.replace("/(tabs)");
     }
     return setDiscardChangesModal(true);
   };
@@ -52,7 +52,7 @@ const CreateWorkoutPlanLayout: React.FC = () => {
       <DiscardChangesModal
         onDiscard={() => {
           resetContextState();
-          router.navigate("/(tabs)/workouts");
+          router.navigate("/(tabs)");
         }}
         visible={discardChangesModal}
         closeModal={() => setDiscardChangesModal(false)}

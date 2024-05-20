@@ -25,6 +25,24 @@ const AuthLayout: React.FC = () => {
             header: () => <AuthStackHeader />,
           }}
         />
+                <Stack.Screen
+          name="accountVerification"
+          options={{
+            header: () => (
+              <StackHeader
+                // headerTitle={t("screens.forgotPass.verification")}
+                headerTitle="Verify"
+                headerLeft={
+                  <BackButton
+                    onPress={() => {
+                      router.back();
+                    }}
+                  />
+                }
+              />
+            ),
+          }}
+        />
         <Stack.Screen
           name="forgotPassword"
           options={{

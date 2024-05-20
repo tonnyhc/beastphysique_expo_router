@@ -15,10 +15,10 @@ export type LoginBody = {
   password: string;
 };
 export type LoginResponse = {
-  // email: string;
+  email: string;
   token: string;
-  is_verified?: boolean;
-  // user_id: number;
+  is_verified: boolean;
+  user_id: number;
   // username: string;
 };
 

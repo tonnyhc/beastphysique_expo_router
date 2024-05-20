@@ -58,7 +58,7 @@ const WorkoutPlanDetailsWorkoutCard: React.FC<
 
   return (
     <TouchableOpacity
-      onPress={() => router.navigate(`/(tabs)/workouts/workout/${workout.id}`)}
+      onPress={() => router.navigate(`workout/${workout.id}`)}
       style={styles.card}
     >
       {/* workout name and exc count */}

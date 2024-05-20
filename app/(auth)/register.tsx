@@ -35,7 +35,8 @@ const Register: React.FC = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: mutationRegister,
     onSuccess: () => {
-      router.replace('/profile-setup/')
+      // router.replace('/profile-setup/')
+      router.navigate('/accountVerification')
     },
   });
   useEffect(() => {
