@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, ScrollView, View, Text } from "react-native";
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useCreateWorkoutContext } from "@/contexts/CreateWorkoutContext";
@@ -15,12 +15,16 @@ import Button from "@/components/common/Button";
 import { router } from "expo-router";
 import ExerciseSearchMuscleGroup from "@/components/exercise/ExerciseSearchMuscleGroup";
 import { t } from "i18next";
+import ExerciseSearchCard from "@/components/exercise/ExerciseSearchCard";
+import {
+  checkExerciseInSearchOrder,
+  checkIsExerciseInSearchSelected,
+} from "@/utils/helperFn";
 
 const ExerciseSearch: React.FC = ({}) => {
   const { colors } = useTheme();
   const { addExercise } = useCreateWorkoutContext();
   const [searchValue, setSearchValue] = useState<string>("");
-  const [filter, setFilter] = useState("exercises");
   const [selectedExercises, setSelectedExercises] = useState<
     ExerciseFromSearch[]
   >([]);
@@ -41,7 +45,6 @@ const ExerciseSearch: React.FC = ({}) => {
       },
     ],
   });
-
   useEffect(() => {
     mutate();
   }, [defferedSearch]);
@@ -58,9 +61,9 @@ const ExerciseSearch: React.FC = ({}) => {
       setSelectedExercises((prevSelected) => [...prevSelected, exercise]);
     }
   };
-  const exercisesForFlatList =
-    filter === "exercises" ? data?.exercises : data?.exercises_by_user;
-
+  if (searchValue) {
+    console.log(data?.exercises);
+  }
   return (
     <Screen closeKeyboardOnClick={true}>
       <Input
@@ -69,18 +72,40 @@ const ExerciseSearch: React.FC = ({}) => {
         placeholder="Exercise name"
         leftIcon={<SearchIcon size={16} color={colors.primaryText} />}
       />
-      {isPending && <ActivityIndicator />}
-      {/* <FlatListHeader /> */}
-      <View style={{ paddingVertical: 18, gap: 28 }}>
-        {queryData.map((data: MuscleGroupWithExercises) => (
-          <ExerciseSearchMuscleGroup
-            key={data.name}
-            selectedExercises={selectedExercises}
-            muscleGroupData={data}
-            onSelectExercise={onSelectExercise}
-          />
-        ))}
-      </View>
+      <ScrollView style={{ flex: 1, marginBottom: 100 }}>
+        {isPending && <ActivityIndicator />}
+        {/* <FlatListHeader /> */}
+        {searchValue ? (
+          <View style={{ paddingVertical: 19, gap: 28 }}>
+            {data?.exercises.map((item: ExerciseFromSearch) => (
+              <ExerciseSearchCard
+                exercise={item}
+                onSelectExercise={onSelectExercise}
+                isSelected={checkIsExerciseInSearchSelected(
+                  item.id,
+                  selectedExercises
+                )}
+                exerciseOrder={checkExerciseInSearchOrder(
+                  item.id,
+                  selectedExercises
+                )}
+              />
+            ))}
+          </View>
+        ) : (
+          <View style={{ paddingVertical: 18, gap: 28 }}>
+            {queryData.map((data: MuscleGroupWithExercises) => (
+              <ExerciseSearchMuscleGroup
+                key={data.name}
+                selectedExercises={selectedExercises}
+                muscleGroupData={data}
+                onSelectExercise={onSelectExercise}
+              />
+            ))}
+          </View>
+        )}
+      </ScrollView>
+
       {/* Select exercises btn */}
       <View style={{ position: "absolute", bottom: 20, left: 100, right: 100 }}>
         <Button
@@ -88,7 +113,7 @@ const ExerciseSearch: React.FC = ({}) => {
             addExercise(selectedExercises);
             router.back();
           }}
-          text={`${t('common.select')} ${selectedExercises.length}`}
+          text={`${t("common.select")} ${selectedExercises.length}`}
         />
       </View>
     </Screen>

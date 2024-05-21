@@ -29,7 +29,7 @@ const UsernameAccountSettingsScreen: React.FC = () => {
   } = useMutation({
     mutationFn: () => updateUsername(newUsername),
     mutationKey: ["update-username"],
-    onSuccess: () => router.replace("/(account)"),
+    onSuccess: () => router.replace("/account"),
   });
   useEffect(() => {
     setNewUsername(queryData?.username);

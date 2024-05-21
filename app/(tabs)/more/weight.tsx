@@ -41,7 +41,7 @@ const WeightScreen: React.FC = () => {
   const dataForChart = convertLogsToChartData();
 
   const styles = StyleSheet.create({});
-
+  console.log(data.weight)
   return (
     <Screen>
       <WeightEditModal

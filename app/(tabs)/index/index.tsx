@@ -30,9 +30,9 @@ const Workouts: React.FC = () => {
     isLoading: isLoading,
   });
 
-  useEffect(() => {
-    router.canDismiss() ? router.dismissAll() : undefined;
-  }, []);
+  // useEffect(() => {
+  //   router.canDismiss() ? router.dismissAll() : undefined;
+  // }, []);
 
   return (
     <Screen>

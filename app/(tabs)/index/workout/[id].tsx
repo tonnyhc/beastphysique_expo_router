@@ -52,22 +52,23 @@ const WorkoutDetails: React.FC = () => {
           paddingTop: 0,
         }}
       >
+        <StackHeader
+          headerStyles={{
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginBottom: 20,
+          }}
+          headerLeft={<BackButton onPress={() => router.back()} />}
+          headerTitle={workoutData.name}
+        />
         <View style={styles.wrapper}>
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{ flexGrow: 1, gap: 16 }}
+            style={{ flex: 1 }}
             refreshControl={
               <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
             }
           >
-            <StackHeader
-              headerStyles={{
-                paddingLeft: 0,
-                paddingRight: 0,
-                marginBottom: 20,
-              }}
-              headerLeft={<BackButton onPress={() => router.back()} />}
-              headerTitle={workoutData.name}
-            />
             {/* <ScrollView style={styles.exercisesWrapper}> */}
             {workoutData.exercises.map((exercise, index) => (
               <WorkoutDetailsExerciseCard
@@ -76,6 +77,7 @@ const WorkoutDetails: React.FC = () => {
                 session={exercise}
               />
             ))}
+
             {/* </ScrollView> */}
           </ScrollView>
         </View>

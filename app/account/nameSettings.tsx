@@ -24,7 +24,7 @@ const NameAccountSettingsScreen: React.FC = () => {
   } = useMutation({
     mutationFn: () => updateFullName(newName),
     mutationKey: ["update_full_name"],
-    onSuccess: () => router.replace("/(account)"),
+    onSuccess: () => router.replace("/account"),
   });
   const { data, isLoading } = useQuery({
     queryFn: fetchFullName,

@@ -9,8 +9,10 @@ import {
   RegisterBody,
 } from "@/types/authTypes";
 import useApi from "@/hooks/service/useApi";
-import { useSegments } from "expo-router";
+import { SplashScreen, useSegments } from "expo-router";
 import { useRouter } from "expo-router";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
+import { useQuery } from "@tanstack/react-query";
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -35,75 +37,59 @@ interface AuthProps {
 
 export const AuthContext = createContext<AuthProps>({});
 
-function useProtectedRoute(token: string | null, isVerified: boolean) {
-  const segments = useSegments();
-  const router = useRouter();
-  useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)";
-    if (token && !isVerified) {
-      return router.replace("/(auth)/accountVerification");
-    }
-    if (!token && !inAuthGroup) {
-      router.replace("/(auth)/onboarding");
-    } else if (token && inAuthGroup) {
-      router.replace("/");
-    }
-  }, [token, segments]);
-}
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  // const [token, setToken] = useState<string>("1");
+  // const [isLoadingToken, setIsLoadingToken] = useState<boolean>(true);
   const [authData, setAuthData] = useState<AuthData>({
     token: null,
-    isVerified: false,
+    isVerified: true,
     email: "",
-    // TODO: Can move this to the profile context later on
-    setupProfile: false,
   });
-  const { post, get, put } = useApi(authData.token || "");
-  useProtectedRoute(authData.token, authData.isVerified);
-
-  const loadAuthData = async (): Promise<void> => {
-    try {
-      const dataFromStorage = await SecureStore.getItemAsync("authData");
-      if (dataFromStorage) {
-        const data = JSON.parse(dataFromStorage);
-        setAuthData({
-          token: data.token,
-          isVerified: data.is_verified,
-          email: data.email,
-          setupProfile: data.setup_profile,
-        });
-      }
-    } catch (error) {
-      console.error("Failed to load auth data:", error);
-    }
+  const fetchTokenFromStorage = async () => {
+    const tokenFromStorage = await SecureStore.getItemAsync("token");
+    return tokenFromStorage ? JSON.parse(tokenFromStorage) : "";
   };
 
+  // useQuerry for getting the user's auth token from the SecureStore and handling the isLoading state
+  const {
+    data: token,
+    isLoading: isLoadingToken,
+    isError: tokenIsError,
+    error: tokenError,
+  } = useQuery({
+    queryFn: fetchTokenFromStorage,
+    queryKey: ["authToken"],
+  });
+  const { post, get, put } = useApi(token);
+
+  useProtectedRoute(token, isLoadingToken, authData.isVerified);
+
+  useEffect(() => {
+    const initializeAuth = async () => {
+      // await loadAuthDataFromStorage();
+      if (isLoadingToken) return;
+      if (token) {
+        return await verifyAuthData();
+      }
+      await logout();
+    };
+    initializeAuth();
+  }, [isLoadingToken]);
   const verifyAuthData = async () => {
     const url = "authentication/verify-token/";
     try {
       const data: LoginResponse = await get(url);
       setAuthData({
         token: data.token,
-        setupProfile: false,
         email: data.email,
-        isVerified: data.is_verified ? data.is_verified : true,
+        isVerified: data.is_verified,
       });
       return data;
     } catch (e) {
+      console.log("error verifying data:", e);
       logout();
     }
   };
-
-  useEffect(() => {
-    const initializeAuth = async () => {
-      await loadAuthData();
-      if (authData.token) {
-        await verifyAuthData();
-      }
-    };
-    initializeAuth();
-  }, []);
 
   async function login(body: LoginBody): Promise<LoginResponse> {
     const loginURL = "authentication/login/";
@@ -114,9 +100,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         token: data.token,
         isVerified: data.is_verified,
         email: data.email,
-        setupProfile: false,
       });
       await SecureStore.setItemAsync("authData", JSON.stringify(data));
+      await SecureStore.setItemAsync("token", JSON.stringify(data.token));
+      setToken(data.token);
       return data;
     } catch (error) {
       throw error;
@@ -130,9 +117,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         token: data.token,
         isVerified: false,
         email: data.email,
-        setupProfile: true,
       });
       await SecureStore.setItemAsync("authData", JSON.stringify(data));
+      await SecureStore.setItemAsync("token", JSON.stringify(data.token));
+      setToken(data.token);
       return data;
     } catch (error) {
       throw error;
@@ -140,12 +128,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
   async function logout(): Promise<void> {
     await SecureStore.deleteItemAsync("authData");
-
+    await SecureStore.deleteItemAsync("token");
+    setToken("");
     setAuthData({
       token: null,
       isVerified: false,
       email: "",
-      setupProfile: false,
     });
   }
   async function confirmAccount(verificationCode: string): Promise<void> {
@@ -155,7 +143,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setAuthData((oldData) => ({
         ...oldData,
         isVerified: true,
-        setupProfile: true,
       }));
     } catch (error) {
       throw error;
@@ -163,6 +150,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
   async function resendVerificationCode(): Promise<void> {
     const url = "authentication/resend-confirmation/";
+    if (!token) {
+      return;
+    }
     try {
       await get(url);
     } catch (error) {
@@ -179,8 +169,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const context = {
-    token: authData.token,
-    isAuth: authData.token ? true : false,
+    token: token,
+    isAuth: token ? true : false,
     email: authData.email,
     isVerified: authData.isVerified,
     onLogin: login,
@@ -188,10 +178,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     onLogout: logout,
     onConfirmAccount: confirmAccount,
     onResendVerificationCode: resendVerificationCode,
-    // TODO: Can move this to the profile context later on
-    setupProfile: authData.setupProfile,
-    // skipSetupProfile,
-    // verifyProfile,
     changePassword,
   };
   return (

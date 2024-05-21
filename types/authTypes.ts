@@ -26,6 +26,5 @@ export type AuthData = {
   token: string | null;
   isVerified: boolean;
   email: string | null;
-  setupProfile: boolean;
   //   username: string | null;
 };

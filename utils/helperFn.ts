@@ -1,4 +1,4 @@
-import { CreateExerciseData } from "@/types/fitnessTypes";
+import { CreateExerciseData, Exercise } from "@/types/fitnessTypes";
 
 interface Height {
   feet?: number;
@@ -83,4 +83,20 @@ export function transformExerciseDataToFormData(
     formData.append("targeted_muscle_groups", item.toString());
   }
   return formData;
+}
+
+export function checkIsExerciseInSearchSelected(
+  exerciseId: number,
+  selectedExercises: { id: number; name: string }[]
+) {
+  const exerciseIds = selectedExercises.map((ex) => ex.id);
+  return exerciseIds.includes(exerciseId);
+}
+
+export function checkExerciseInSearchOrder(
+  exerciseId: number,
+  selectedExercises: { id: number; name: string }[]
+) {
+  const exerciseIds = selectedExercises.map((ex) => ex.id);
+  return exerciseIds.indexOf(exerciseId) + 1;
 }

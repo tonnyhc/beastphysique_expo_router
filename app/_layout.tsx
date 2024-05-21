@@ -16,7 +16,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { CreateWorkoutProvider } from "@/contexts/CreateWorkoutContext";
 import CreateWorkoutPlanProvider from "@/contexts/CreateWorkoutPlanContext";
 import { UtilityProvider } from "@/contexts/UtilityContext";
-import ToastMessage from "@/components/common/ToastMessage";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -75,11 +74,10 @@ function RootLayoutNav() {
         <UtilityProvider>
           <AuthProvider>
             <ThemeProvider>
-              {/* <ToastMessage /> */}
               <CreateWorkoutPlanProvider>
                 <Stack
                   screenOptions={{ headerShown: false }}
-                  initialRouteName="(tabs)"
+                  // initialRouteName="(auth)"
                 >
                   <Stack.Screen name="(tabs)" />
                   <Stack.Screen name="(auth)" />

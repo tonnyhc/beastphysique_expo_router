@@ -5,7 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import ChevronDown from "@/icons/ChevronDown";
 import ChevronUp from "@/icons/ChevronUp";
 import ExerciseSearchCard from "./ExerciseSearchCard";
-
+import { checkExerciseInSearchOrder, checkIsExerciseInSearchSelected } from "@/utils/helperFn";
 
 interface ExerciseSearchMuscleGroupProps {
   muscleGroupData: MuscleGroupWithExercises;
@@ -37,15 +37,6 @@ const ExerciseSearchMuscleGroup: React.FC<ExerciseSearchMuscleGroupProps> = ({
     },
   });
 
-  const checkIsSelected = (exerciseId: number) => {
-    const exerciseIds = selectedExercises.map((ex) => ex.id);
-    return exerciseIds.includes(exerciseId);
-  };
-
-  const checkExerciseOrder = (exerciseId: number) => {
-    const exerciseIds = selectedExercises.map((ex) => ex.id);
-    return exerciseIds.indexOf(exerciseId) + 1;
-  };
   return (
     <>
       <TouchableOpacity
@@ -71,10 +62,13 @@ const ExerciseSearchMuscleGroup: React.FC<ExerciseSearchMuscleGroupProps> = ({
           {muscleGroupData.exercises.map((exercise) => (
             <ExerciseSearchCard
               key={exercise.id}
-              isSelected={checkIsSelected(exercise.id)}
+              isSelected={checkIsExerciseInSearchSelected(
+                exercise.id,
+                selectedExercises
+              )}
               exercise={exercise}
               onSelectExercise={onSelectExercise}
-              exerciseOrder={checkExerciseOrder(exercise.id)}
+              exerciseOrder={checkExerciseInSearchOrder(exercise.id, selectedExercises)}
             />
           ))}
         </View>

@@ -15,11 +15,10 @@ interface WeightLogsProps {
 }
 
 const WeightLogs: React.FC<WeightLogsProps> = ({ logs }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
   const renderArrow = (log: Log, oldLog: Log, index: number) => {
-
     if (log.weight > oldLog.weight) {
       return <ArrowUp size={24} color={colors.error} scale={1} />;
     } else if (log.weight < oldLog.weight) {
@@ -66,7 +65,7 @@ const WeightLogs: React.FC<WeightLogsProps> = ({ logs }) => {
         <View style={styles.log}>
           <Text style={styles.logDate}>{log.date}</Text>
           <View style={styles.valueWrapper}>
-            <Text style={styles.logValue}>{log.weight.toFixed(1)} kg</Text>
+            <Text style={styles.logValue}>{log.weight?.toFixed(1)} kg</Text>
             <View>
               {renderArrow(log, logs[index > 0 ? index - 1 : index], index)}
             </View>

@@ -30,7 +30,7 @@ const BirthdayAccountSettingsScreen: React.FC = () => {
       return updateBirthday(newBirthday);
     },
     mutationKey: ["profile-birthday"],
-    onSuccess: () => router.replace("/(account)"),
+    onSuccess: () => router.replace("/account"),
   });
   useEffect(() => {
     const date = new Date(queryData.birthday);

@@ -28,7 +28,7 @@ const BioAccountSettingsScreen: React.FC = () => {
   } = useMutation({
     mutationFn: () => updateBio(newBio),
     mutationKey: ["update-bio"],
-    onSuccess: () => router.replace("/(account)"),
+    onSuccess: () => router.replace("/account"),
   });
   useEffect(() => {
     setNewBio(queryData.bio ? queryData.bio : "");

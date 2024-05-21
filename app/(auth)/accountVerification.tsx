@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, Keyboard, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -8,11 +14,11 @@ import OTPInputView from "@twotalltotems/react-native-otp-input";
 import Button from "@/components/common/Button";
 import { router } from "expo-router";
 
-
 const AccountVerification: React.FC = () => {
   const { colors, theme } = useTheme();
   const [code, setCode] = useState<string>("");
-  const { onConfirmAccount, email, onResendVerificationCode } = useAuth();
+  const { isVerified, onConfirmAccount, email, onResendVerificationCode } =
+    useAuth();
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
   // TODO: when the user is not verified and logs in send a new code every time
@@ -24,10 +30,12 @@ const AccountVerification: React.FC = () => {
       new Error("onConfirmAccount function is not provided")
     );
   };
-
+  console.log('email', email)
   const { mutate, isPending } = useMutation({
     mutationFn: (code: string) => mutation(code),
-    onSuccess: () => router.replace('/profile-setup'),
+    onSuccess: () => {
+      router.replace("/profile-setup");
+    },
     onError: (error) => console.log(error),
   });
 
@@ -87,7 +95,7 @@ const AccountVerification: React.FC = () => {
           <OTPInputView
             pinCount={5}
             code={code}
-            keyboardAppearance={theme as 'light' || 'dark'}
+            keyboardAppearance={(theme as "light") || "dark"}
             codeInputHighlightStyle={{
               borderBottomColor: colors.button,
             }}
