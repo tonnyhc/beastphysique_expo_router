@@ -5,8 +5,8 @@ interface RequestInitWithBody extends RequestInit {
 export type RequestMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 // const hostUrl = "http://192.168.100.6:8000/";
-const hostUrl = "http://172.20.10.2:8000/";
-// const hostUrl = 'http://beast-physique.com/'
+// const hostUrl = "http://172.20.10.2:8000/";
+const hostUrl = 'http://beast-physique.com/'
 
 const useApi = (token: string | null) => {
   const requester = async (
@@ -37,7 +37,6 @@ const useApi = (token: string | null) => {
 
     try {
       const response = await fetch(hostUrl + url, options);
-
       // Checking if the status is 204 (NO CONTENT) to return the response without parsing it to an object
       if (response.status === 204) {
         return response;
@@ -55,6 +54,7 @@ const useApi = (token: string | null) => {
       // If everything goes as expected, return the response as an object
       return response.json();
     } catch (e) {
+      console.log(e)
       throw e;
     }
   };

@@ -38,7 +38,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
     }
     setDisabledSubmit(false);
   }, [data]);
-
+  if (loginError) {
+    console.log("login error", loginError);
+  }
   const styles = StyleSheet.create({
     form: {
       flex: 1,
@@ -86,7 +88,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
               leftIcon={<LockIcon size={24} color={colors.helperText} />}
               rightIcon={<EyeIcon size={24} color={colors.helperText} />}
               helperTextRight={t("common.forgotPass")}
-              onPressHelperRight={() => router.replace('/(auth)/forgotPassword')}
+              onPressHelperRight={() =>
+                router.replace("/(auth)/forgotPassword")
+              }
             />
           </View>
         </View>
@@ -98,7 +102,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             onPress={() => onLogin(data)}
             loading={isPending}
           />
-          <Link href='/(auth)/register' asChild>
+          <Link href="/(auth)/register" asChild>
             <Button
               type="text"
               text={t("components.loginForm.navigateToRegister")}

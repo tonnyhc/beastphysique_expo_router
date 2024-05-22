@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     error: tokenError,
   } = useQuery({
     queryFn: fetchTokenFromStorage,
-    queryKey: ["authToken"],
+    queryKey: ["authToken", authData.token],
   });
   const { post, get, put } = useApi(token);
 
@@ -66,7 +66,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      // await loadAuthDataFromStorage();
       if (isLoadingToken) return;
       if (token) {
         return await verifyAuthData();
@@ -96,14 +95,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
       const data = await post(loginURL, body);
+      await SecureStore.setItemAsync("authData", JSON.stringify(data));
+      await SecureStore.setItemAsync("token", JSON.stringify(data.token));
       setAuthData({
         token: data.token,
         isVerified: data.is_verified,
         email: data.email,
       });
-      await SecureStore.setItemAsync("authData", JSON.stringify(data));
-      await SecureStore.setItemAsync("token", JSON.stringify(data.token));
-      setToken(data.token);
+
       return data;
     } catch (error) {
       throw error;
@@ -120,19 +119,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       await SecureStore.setItemAsync("authData", JSON.stringify(data));
       await SecureStore.setItemAsync("token", JSON.stringify(data.token));
-      setToken(data.token);
       return data;
     } catch (error) {
       throw error;
     }
   }
   async function logout(): Promise<void> {
-    await SecureStore.deleteItemAsync("authData");
     await SecureStore.deleteItemAsync("token");
-    setToken("");
+    await SecureStore.deleteItemAsync("authData");
     setAuthData({
       token: null,
-      isVerified: false,
+      isVerified: true,
       email: "",
     });
   }

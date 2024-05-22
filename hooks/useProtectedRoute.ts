@@ -13,23 +13,28 @@ function useProtectedRoute(
 
   useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
+    try {
+      // console.log("token: ", token);
+      // console.log("loadingToken: ", loadingToken);
+      // console.log("isVerified: ", isVerified);
 
-    if (!token && !inAuthGroup) {
-      return router.replace("/(auth)/onboarding");
+      if (!token && !inAuthGroup) {
+        return router.replace("/(auth)/onboarding");
+      }
+      if (loadingToken) {
+        return;
+      }
+      if (token && !isVerified) {
+        return router.replace("/(auth)/accountVerification");
+      }
+      if ((!token && !inAuthGroup) || (!token && !isVerified)) {
+        return router.replace("/(auth)/onboarding");
+      } else if (token && inAuthGroup) {
+        return router.replace("/");
+      }
+    } catch (e) {
+      console.log("error from protected route", e);
     }
-    if (loadingToken) {
-      return;
-    }
-    if (token && !isVerified) {
-      return router.replace("/(auth)/accountVerification");
-    }
-    if (!token && !inAuthGroup) {
-      return router.replace("/(auth)/onboarding");
-    }
-    return router.replace('/')
-    // } else if (token && inAuthGroup) {
-    //   return router.replace("/");
-    // }
   }, [token, segments, loadingToken, isVerified]);
 }
 
