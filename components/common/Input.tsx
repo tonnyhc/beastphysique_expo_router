@@ -66,7 +66,7 @@ const Input: React.FC<InputProps> = ({
   borderStyles,
   keyboardType,
   maxLength,
-  autoCapitalize = 'sentences'
+  autoCapitalize = "sentences",
 }) => {
   const { t } = useTranslation();
   const { colors, theme } = useTheme();
@@ -103,7 +103,7 @@ const Input: React.FC<InputProps> = ({
     master: {
       gap: 8,
       minHeight: multiline ? 68 : 42,
-      height: 'auto',
+      height: "auto",
       borderWidth: 1,
       borderRadius: 4,
       borderColor: error || emailError ? colors.error : "#676767",
@@ -129,7 +129,7 @@ const Input: React.FC<InputProps> = ({
     placeholderText: {
       fontSize: 18,
       fontFamily: "RobotoMedium",
-      color: colors.secondaryText
+      color: colors.secondaryText,
     },
     helperRow: {
       flexDirection: "row",
@@ -142,13 +142,23 @@ const Input: React.FC<InputProps> = ({
       color: error || emailError ? colors.error : colors.secondaryText,
     },
   });
-
   const renderPasswordVisibilityIcon = () => {
     if (securedPassword) {
       return <EyeIcon size={24} color={colors.secondaryText} />;
     }
     return <EyeSlashIcon size={24} color={colors.secondaryText} />;
   };
+
+  const handleMultiLines = () => {
+    if (numberOfLines && multiline) {
+      return numberOfLines;
+    } else if (!numberOfLines && multiline) {
+      return 10;
+    } else {
+      return 1;
+    }
+  };
+  const multilines = handleMultiLines();
 
   return (
     <View style={stylesheet.wrapper}>
@@ -162,6 +172,7 @@ const Input: React.FC<InputProps> = ({
         ) : null}
 
         {/* input */}
+
         <TextInput
           autoCapitalize={autoCapitalize}
           maxLength={maxLength ? maxLength : undefined}
@@ -176,7 +187,7 @@ const Input: React.FC<InputProps> = ({
           onChangeText={onChange}
           inputMode={inputMode}
           multiline={multiline}
-          numberOfLines={numberOfLines ? numberOfLines : 10}
+          numberOfLines={multilines}
         />
         {/* right icon */}
         {isPassword ? (

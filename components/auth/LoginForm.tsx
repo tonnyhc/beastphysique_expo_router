@@ -74,6 +74,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             leftIcon={<EmailIcon size={24} color={colors.helperText} />}
             placeholder="john@doe.com"
             value={data.email}
+            multiline={false}
+            
           />
           <View>
             <Input
